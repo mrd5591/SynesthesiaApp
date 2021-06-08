@@ -3,49 +3,39 @@
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     x:Class="Synesthesia.StartPage"
-    xmlns:lv="clr-namespace:Xamarin.Forms.MultiSelectListView;assembly=Xamarin.Forms.MultiSelectListView" Padding="0,20,0,0">
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="3*"/>
-        </Grid.RowDefinitions>
+    xmlns:lv="clr-namespace:Xamarin.Forms.MultiSelectListView;assembly=Xamarin.Forms.MultiSelectListView" Padding="0,50,0,0"
+    BackgroundColor="#ffedb0">
+    <StackLayout>
+        <Image Source="synTitle.png" BackgroundColor="Transparent" Margin="20,0"/>
         <Button x:Name="StartTestButton"
-                VerticalOptions="EndAndExpand"
+                VerticalOptions="CenterAndExpand"
                 HorizontalOptions="CenterAndExpand"
                 Margin="25"
                 Text="Start Test"
                 BackgroundColor="LightBlue"
                 IsEnabled="True"
-                Clicked="StartTestButton_Clicked"
-                Grid.Row="0"/>
+                Clicked="StartTestButton_Clicked"/>
         <ListView x:Name="StimulusGroups"
-                  HasUnevenRows="False"
+                  HasUnevenRows="True"
                   SeparatorVisibility="Default"
                   lv:MultiSelect.Enable="True"
                   ItemsSource="{Binding Groups}"
-                  VerticalOptions="StartAndExpand"
-                  Grid.Row="1">
+                  VerticalOptions="StartAndExpand">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <lv:SelectableCell x:Name="SelectableCell">
 
                         <lv:SelectableCell.CheckView>
-                            <Image Source="check.png" WidthRequest="30" HeightRequest="30"></Image>
+                            <Image Source="check.png" WidthRequest="20" HeightRequest="20"/>
                         </lv:SelectableCell.CheckView>
 
                         <lv:SelectableCell.DataView>
-                            <StackLayout Orientation="Vertical" Padding="20,0,20,0">
-                                <Label Text="{Binding Name}" FontSize="17" />
-                            </StackLayout>
+                            <Label Text="{Binding Name}" FontSize="20" HorizontalOptions="CenterAndExpand" VerticalOptions="StartAndExpand" Padding="20,0"/>
                         </lv:SelectableCell.DataView>
 
                     </lv:SelectableCell>
                 </DataTemplate>
             </ListView.ItemTemplate>
-
-            <ListView.Behaviors>
-                <lv:SelectedItemBehavior Command="{Binding }"/>
-            </ListView.Behaviors>
         </ListView>
-    </Grid>
+    </StackLayout>
 </ContentPage>

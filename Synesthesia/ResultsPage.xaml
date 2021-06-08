@@ -2,7 +2,8 @@
 <ContentPage
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    x:Class="Synesthesia.ResultsPage">
+    x:Class="Synesthesia.ResultsPage"
+    BackgroundColor="#ffedb0">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="2*"/>

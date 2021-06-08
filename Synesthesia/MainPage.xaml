@@ -3,7 +3,8 @@
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:colorpicker="clr-namespace:ColorPicker;assembly=ColorPicker"
-    x:Class="Synesthesia.MainPage">
+    x:Class="Synesthesia.MainPage"
+    BackgroundColor="#ffedb0">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -43,6 +44,8 @@
         </Grid>
         <Label Text="What color do you associate with...?"
                Grid.Row="2"
+               FontSize="Medium"
+               TextColor="Black"
                HorizontalOptions="CenterAndExpand"
                VerticalOptions="CenterAndExpand"/>
         <Label Text="{Binding currentQuestionText}"
@@ -54,6 +57,7 @@
                TextColor="{Binding Source={x:Reference Wheel}, Path=SelectedColor}"/>
         <Button x:Name="NextButton"
                 Text="Next"
+                FontSize="Large"
                 BackgroundColor="LightBlue"
                 Grid.Row="4"
                 Clicked="Button_Clicked"/>

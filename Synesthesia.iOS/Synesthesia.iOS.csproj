@@ -145,4 +145,7 @@
   <ItemGroup>
     <AndroidResource Include="Resources\check.png" />
   </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\synTitle.png" />
+  </ItemGroup>
 </Project>
