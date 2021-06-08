@@ -1,0 +1,51 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<ContentPage
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    x:Class="Synesthesia.StartPage"
+    xmlns:lv="clr-namespace:Xamarin.Forms.MultiSelectListView;assembly=Xamarin.Forms.MultiSelectListView" Padding="0,20,0,0">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="3*"/>
+        </Grid.RowDefinitions>
+        <Button x:Name="StartTestButton"
+                VerticalOptions="EndAndExpand"
+                HorizontalOptions="CenterAndExpand"
+                Margin="25"
+                Text="Start Test"
+                BackgroundColor="LightBlue"
+                IsEnabled="True"
+                Clicked="StartTestButton_Clicked"
+                Grid.Row="0"/>
+        <ListView x:Name="StimulusGroups"
+                  HasUnevenRows="False"
+                  SeparatorVisibility="Default"
+                  lv:MultiSelect.Enable="True"
+                  ItemsSource="{Binding Groups}"
+                  VerticalOptions="StartAndExpand"
+                  Grid.Row="1">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <lv:SelectableCell x:Name="SelectableCell">
+
+                        <lv:SelectableCell.CheckView>
+                            <Image Source="check.png" WidthRequest="30" HeightRequest="30"></Image>
+                        </lv:SelectableCell.CheckView>
+
+                        <lv:SelectableCell.DataView>
+                            <StackLayout Orientation="Vertical" Padding="20,0,20,0">
+                                <Label Text="{Binding Name}" FontSize="17" />
+                            </StackLayout>
+                        </lv:SelectableCell.DataView>
+
+                    </lv:SelectableCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+
+            <ListView.Behaviors>
+                <lv:SelectedItemBehavior Command="{Binding }"/>
+            </ListView.Behaviors>
+        </ListView>
+    </Grid>
+</ContentPage>
