@@ -1,0 +1,61 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<ContentPage
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:colorpicker="clr-namespace:ColorPicker;assembly=ColorPicker"
+    x:Class="Synesthesia.MainPage">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="5*"/>
+            <RowDefinition Height="5*"/>
+            <RowDefinition Height="20*"/>
+            <RowDefinition Height="15*"/>
+        </Grid.RowDefinitions>
+        <colorpicker:ColorWheel x:Name="Wheel"
+                                ShowAlphaSlider="True"
+                                ShowLuminositySlider="True"
+                                ShowLuminosityWheel="False"
+                                IsVisible="True"
+                                Vertical="True"
+                                Padding="15,25,25,0"
+                                Grid.Row="0"/>
+        <Grid Grid.Row="1"
+              HorizontalOptions="CenterAndExpand"
+              VerticalOptions="StartAndExpand">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="3*"/>
+            </Grid.ColumnDefinitions>
+            <CheckBox x:Name="Checkbox"
+                      Color="Gray"
+                      Grid.Column="0"
+                      HorizontalOptions="EndAndExpand"
+                      VerticalOptions="CenterAndExpand"
+                      CheckedChanged="Checkbox_CheckedChanged"
+                      Margin="0,0,5,0"/>
+            <Label Text="None"
+                   FontSize="Medium"
+                   TextColor="Gray"
+                   HorizontalOptions="StartAndExpand"
+                   VerticalOptions="CenterAndExpand"
+                   Grid.Column="1"/>
+        </Grid>
+        <Label Text="What color do you associate with...?"
+               Grid.Row="2"
+               HorizontalOptions="CenterAndExpand"
+               VerticalOptions="CenterAndExpand"/>
+        <Label Text="{Binding currentQuestionText}"
+               x:Name="ValueLabel"
+               Grid.Row="3"
+               VerticalOptions="CenterAndExpand"
+               HorizontalOptions="CenterAndExpand"
+               FontSize="80"
+               TextColor="{Binding Source={x:Reference Wheel}, Path=SelectedColor}"/>
+        <Button x:Name="NextButton"
+                Text="Next"
+                BackgroundColor="LightBlue"
+                Grid.Row="4"
+                Clicked="Button_Clicked"/>
+    </Grid>
+</ContentPage>

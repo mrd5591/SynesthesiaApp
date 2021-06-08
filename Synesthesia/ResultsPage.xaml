@@ -1,0 +1,49 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<ContentPage
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    x:Class="Synesthesia.ResultsPage">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="2*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="2*"/>
+        </Grid.RowDefinitions>
+        <Frame VerticalOptions="EndAndExpand"
+               HorizontalOptions="FillAndExpand"
+               Grid.Row="0"
+               Margin="40,0,40,0">
+            <Entry x:Name="EmailEntry"
+                   Placeholder="Email..."
+                   Margin="2"
+                   VerticalOptions="CenterAndExpand"
+                   HorizontalOptions="FillAndExpand"
+                   TextChanged="Entry_TextChanged"
+                   HorizontalTextAlignment="Center"/>
+        </Frame>
+        <Picker x:Name="Picker"
+                Title="Pick a file type"
+                Grid.Row="1"
+                Margin="40"
+                HorizontalOptions="CenterAndExpand"
+                VerticalOptions="CenterAndExpand"
+                HorizontalTextAlignment="Center"
+                SelectedIndexChanged="Picker_SelectedIndexChanged">
+            <Picker.ItemsSource>
+                <x:Array Type="{x:Type x:String}">
+                    <x:String>CSV</x:String>
+                    <x:String>XLSX</x:String>
+                </x:Array>
+            </Picker.ItemsSource>
+        </Picker>
+        <Button x:Name="ResultButton"
+                Text="Send Results"
+                BackgroundColor="DarkSalmon"
+                Grid.Row="2"
+                VerticalOptions="StartAndExpand"
+                HorizontalOptions="CenterAndExpand"
+                Padding="25,0,25,0"
+                Clicked="Button_Clicked"
+                IsEnabled="False"/>
+    </Grid>
+</ContentPage>
