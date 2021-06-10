@@ -4,7 +4,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     x:Class="Synesthesia.StartPage"
     xmlns:lv="clr-namespace:Xamarin.Forms.MultiSelectListView;assembly=Xamarin.Forms.MultiSelectListView" Padding="0,50,0,0"
-    BackgroundColor="#ffedb0">
+    BackgroundColor="White">
     <StackLayout>
         <Image Source="synTitle.png" BackgroundColor="Transparent" Margin="20,0"/>
         <Button x:Name="StartTestButton"

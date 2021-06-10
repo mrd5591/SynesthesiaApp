@@ -16,6 +16,7 @@ namespace Synesthesia
 
         private Dictionary<string, Color> colorAssociations;
         private Color DefaultColor;
+
         public MainPage(bool letters, bool numbers, bool dow, bool months)
         {
             InitializeComponent();
@@ -74,7 +75,7 @@ namespace Synesthesia
             }
         }
 
-        async void Checkbox_CheckedChanged(System.Object sender, Xamarin.Forms.CheckedChangedEventArgs e)
+        void Checkbox_CheckedChanged(System.Object sender, Xamarin.Forms.CheckedChangedEventArgs e)
         {
             if(e.Value)
             {
