@@ -3,10 +3,10 @@
 	<uses-sdk android:minSdkVersion="21" android:targetSdkVersion="30" />
 	<application android:label="Synesthesia.Android" android:theme="@style/MainTheme" android:icon="@drawable/xamarin_logo"></application>
 	<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-  <queries>
-    <intent>
-      <action android:name="android.intent.action.SENDTO" />
-      <data android:scheme="mailto" />
-    </intent>
-  </queries>
+	<queries>
+		<intent>
+			<action android:name="android.intent.action.SENDTO" />
+			<data android:scheme="mailto" />
+		</intent>
+	</queries>
 </manifest>

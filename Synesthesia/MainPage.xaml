@@ -4,11 +4,12 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:colorpicker="clr-namespace:ColorPicker;assembly=ColorPicker"
     xmlns:local="clr-namespace:Synesthesia"
+    xmlns:f9p="clr-namespace:Forms9Patch;assembly=Forms9Patch"
     x:Class="Synesthesia.MainPage"
     BackgroundColor="White">
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="40*"/>
             <RowDefinition Height="5*"/>
             <RowDefinition Height="20*"/>
             <RowDefinition Height="10*"/>
@@ -23,10 +24,10 @@
                                 Grid.Row="0"/>
         <Grid Grid.Row="1"
               HorizontalOptions="CenterAndExpand"
-              VerticalOptions="StartAndExpand">
+              VerticalOptions="CenterAndExpand">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="3*"/>
+                <ColumnDefinition Width="2*"/>
             </Grid.ColumnDefinitions>
             <CheckBox x:Name="Checkbox"
                       Color="Gray"
@@ -34,13 +35,14 @@
                       HorizontalOptions="EndAndExpand"
                       VerticalOptions="CenterAndExpand"
                       CheckedChanged="Checkbox_CheckedChanged"
-                      Margin="0,0,5,0"/>
-            <Label Text="No color"
-                   FontSize="Medium"
+                      Margin="0,0,5,0"
+                      Scale="1.5"/>
+            <f9p:Label Text="No color"
                    TextColor="Gray"
                    HorizontalOptions="StartAndExpand"
                    VerticalOptions="CenterAndExpand"
-                   Grid.Column="1"/>
+                   Grid.Column="1"
+                   FontSize="30"/>
         </Grid>
         <Grid Grid.Row="2" Padding="5">
             <Grid.ColumnDefinitions>
@@ -49,21 +51,28 @@
             </Grid.ColumnDefinitions>
             <BoxView Color="{Binding Source={x:Reference Wheel}, Path=SelectedColor}"
                      Grid.Column="0"/>
-            <local:CustomLabel Text="{Binding currentQuestionText}"
+            <f9p:Label Text="{Binding currentQuestionText}"
                    x:Name="ValueLabel"
                    Grid.Column="1"
-                   VerticalOptions="FillAndExpand"
                    VerticalTextAlignment="Center"
-                   HorizontalOptions="CenterAndExpand"
+                   HorizontalOptions="Center"
+                   VerticalOptions="Center"
                    HorizontalTextAlignment="Center"
-                   TextColor="Black">
-            </local:CustomLabel>
+                   TextColor="Black"
+                   Lines="1"
+                   AutoFit="Width"
+                   LineBreakMode="NoWrap"
+                   FontSize="100">
+            </f9p:Label>
         </Grid>
-        <Button x:Name="NextButton"
-                Text="Next"
-                FontSize="Large"
-                BackgroundColor="LightBlue"
-                Grid.Row="3"
-                Clicked="Button_Clicked"/>
+        <f9p:Button x:Name="NextButton"
+                    Text="Next"
+                    LineBreakMode="NoWrap"
+                    Lines="0"
+                    AutoFit="Width"
+                    BackgroundColor="LightBlue"
+                    Grid.Row="3"
+                    Clicked="Button_Clicked"
+                    FontSize="100"/>
     </Grid>
 </ContentPage>

@@ -2,79 +2,67 @@
 using System.Collections.Generic;
 using Synesthesia.Models;
 using Xamarin.Forms;
-using Xamarin.Forms.MultiSelectListView;
 
 namespace Synesthesia
 {
     public partial class StartPage : ContentPage
     {
-        public MultiSelectObservableCollection<GroupItem> Groups { get; }
-
+        private Dictionary<string, bool> Groups = new Dictionary<string, bool>();
         public StartPage()
         {
             InitializeComponent();
 
-            Groups = new MultiSelectObservableCollection<GroupItem>();
-
-            GroupItem item = new GroupItem();
-            item.Name = "Letters";
-            Groups.Add(item);
-
-            item = new GroupItem();
-            item.Name = "Numbers";
-            Groups.Add(item);
-
-            item = new GroupItem();
-            item.Name = "Days of the Week";
-            Groups.Add(item);
-
-            item = new GroupItem();
-            item.Name = "Months";
-            Groups.Add(item);
+            Groups.Add("Letters", false);
+            Groups.Add("Numbers", false);
+            Groups.Add("DotW", false);
+            Groups.Add("Months", false);
 
             BindingContext = this;
         }
 
         async void StartTestButton_Clicked(System.Object sender, System.EventArgs e)
         {
-            bool letters = false;
-            bool numbers = false;
-            bool dow = false;
-            bool months = false;
+            StartTestButton.IsEnabled = false;
+            bool letters = Groups["Letters"];
+            bool numbers = Groups["Numbers"];
+            bool dow = Groups["DotW"];
+            bool months = Groups["Months"];
 
-            foreach(SelectableItem<GroupItem> item in Groups)
+            if((letters || numbers || dow || months) && !string.IsNullOrWhiteSpace(UsernameEntry.Text))
             {
-                if(item.IsSelected)
-                {
-                    string name = ((GroupItem)item.Data).Name;
-                    switch(name)
-                    {
-                        case "Letters":
-                            letters = true;
-                            break;
-
-                        case "Numbers":
-                            numbers = true;
-                            break;
-
-                        case "Days of the Week":
-                            dow = true;
-                            break;
-
-                        case "Months":
-                            months = true;
-                            break;
-                    }
-                }
+                await Navigation.PushAsync(new MainPage(letters, numbers, dow, months, UsernameEntry.Text));
+            } else 
+            {
+                await Application.Current.MainPage.DisplayAlert("Error", "Select at least one stimulus group and enter a username", "OK");
+                StartTestButton.IsEnabled = true;
             }
+        }
 
-            if(letters || numbers || dow || months)
-            {
-                await Navigation.PushAsync(new MainPage(letters, numbers, dow, months));
-            } else
-            {
-                await Application.Current.MainPage.DisplayAlert("Error", "Select at least one stimulus group", "OK");
-            }
+        void Letters_Toggled(System.Object sender, Xamarin.Forms.ToggledEventArgs e)
+        {
+            Groups["Letters"] = !Groups["Letters"];
+        }
+
+        void Numbers_Toggled(System.Object sender, Xamarin.Forms.ToggledEventArgs e)
+        {
+            Groups["Numbers"] = !Groups["Numbers"];
+        }
+
+        void DotW_Toggled(System.Object sender, Xamarin.Forms.ToggledEventArgs e)
+        {
+            Groups["DotW"] = !Groups["DotW"];
+        }
+
+        void Months_Toggled(System.Object sender, Xamarin.Forms.ToggledEventArgs e)
+        {
+            Groups["Months"] = !Groups["Months"];
+        }
+
+        protected override void OnAppearing()
+        {
+            base.OnAppearing();
+
+            StartTestButton.IsEnabled = true;
         }
     }
 }

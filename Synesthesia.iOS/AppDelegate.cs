@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿
 using ColorPicker.iOS;
 using Foundation;
 using UIKit;
@@ -24,7 +22,8 @@ namespace Synesthesia.iOS
         {
             global::Xamarin.Forms.Forms.Init();
             LoadApplication(new App());
-            Rg.Plugins.Popup.Popup.Init();
+
+            Forms9Patch.iOS.Settings.Initialize(this);
 
             ColorPickerEffects.Init();
 

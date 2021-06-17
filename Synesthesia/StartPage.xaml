@@ -2,40 +2,83 @@
 <ContentPage
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:f9p="clr-namespace:Forms9Patch;assembly=Forms9Patch"
     x:Class="Synesthesia.StartPage"
-    xmlns:lv="clr-namespace:Xamarin.Forms.MultiSelectListView;assembly=Xamarin.Forms.MultiSelectListView" Padding="0,50,0,0"
+    Padding="0,50,0,0"
     BackgroundColor="White">
-    <StackLayout>
-        <Image Source="synTitle.png" BackgroundColor="Transparent" Margin="20,0"/>
-        <Button x:Name="StartTestButton"
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="2*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="2*"/>
+        </Grid.RowDefinitions>
+        <Image Source="synTitle.png" BackgroundColor="Transparent" Margin="20,0" Grid.Row="0"/>
+        <f9p:Button x:Name="StartTestButton"
                 VerticalOptions="CenterAndExpand"
                 HorizontalOptions="CenterAndExpand"
-                Margin="25"
+                HorizontalTextAlignment="Center"
+                VerticalTextAlignment="Center"
+                Margin="0"
+                Padding="20"
                 Text="Start Test"
                 BackgroundColor="LightBlue"
                 IsEnabled="True"
-                Clicked="StartTestButton_Clicked"/>
-        <ListView x:Name="StimulusGroups"
-                  HasUnevenRows="True"
-                  SeparatorVisibility="Default"
-                  lv:MultiSelect.Enable="True"
-                  ItemsSource="{Binding Groups}"
-                  VerticalOptions="StartAndExpand">
-            <ListView.ItemTemplate>
-                <DataTemplate>
-                    <lv:SelectableCell x:Name="SelectableCell">
-
-                        <lv:SelectableCell.CheckView>
-                            <Image Source="check.png" WidthRequest="20" HeightRequest="20"/>
-                        </lv:SelectableCell.CheckView>
-
-                        <lv:SelectableCell.DataView>
-                            <Label Text="{Binding Name}" FontSize="20" HorizontalOptions="CenterAndExpand" VerticalOptions="StartAndExpand" Padding="20,0"/>
-                        </lv:SelectableCell.DataView>
-
-                    </lv:SelectableCell>
-                </DataTemplate>
-            </ListView.ItemTemplate>
-        </ListView>
-    </StackLayout>
+                Clicked="StartTestButton_Clicked" Grid.Row="1"
+                TextColor="Black"
+                Lines="0"
+                AutoFit="Width"
+                LineBreakMode="NoWrap"/>
+        <StackLayout Grid.Row="2" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+            <Grid HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Label TextColor="Black" Grid.Column="0" Text="Letters" Margin="0,0,5,0" HorizontalOptions="EndAndExpand" VerticalOptions="CenterAndExpand" VerticalTextAlignment="Center"/>
+            <Switch x:Name="Letters" Grid.Column="1" Toggled="Letters_Toggled" HorizontalOptions="StartAndExpand" VerticalOptions="CenterAndExpand"/>
+        </Grid>
+        <Grid HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Label TextColor="Black" Grid.Column="0" Text="Numbers" Margin="0,0,5,0" HorizontalOptions="EndAndExpand" VerticalOptions="CenterAndExpand" VerticalTextAlignment="Center"/>
+            <Switch x:Name="Numbers" Grid.Column="1" Toggled="Numbers_Toggled" HorizontalOptions="StartAndExpand" VerticalOptions="CenterAndExpand"/>
+        </Grid>
+        <Grid HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Label TextColor="Black" Grid.Column="0" Text="Days of the Week" Margin="0,0,5,0" HorizontalOptions="EndAndExpand" VerticalOptions="CenterAndExpand" VerticalTextAlignment="Center"/>
+            <Switch x:Name="DotW" Grid.Column="1" Toggled="DotW_Toggled" HorizontalOptions="StartAndExpand" VerticalOptions="CenterAndExpand"/>
+        </Grid>
+        <Grid HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Label TextColor="Black" Grid.Column="0" Text="Months" Margin="0,0,5,0" HorizontalOptions="EndAndExpand" VerticalOptions="CenterAndExpand" VerticalTextAlignment="Center"/>
+            <Switch x:Name="Months" Grid.Column="1" Toggled="Months_Toggled" HorizontalOptions="StartAndExpand" VerticalOptions="CenterAndExpand"/>
+        </Grid>
+        </StackLayout>
+        <Grid Grid.Row="3">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Entry x:Name="UsernameEntry"
+               Placeholder="Username"
+               Margin="2"
+               VerticalOptions="CenterAndExpand"
+               HorizontalOptions="FillAndExpand"
+               HorizontalTextAlignment="Center"
+               BackgroundColor="GhostWhite"
+               TextColor="Black"
+                   Grid.Column="1"/>
+        </Grid>
+    </Grid>
 </ContentPage>

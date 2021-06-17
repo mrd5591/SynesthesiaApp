@@ -3,85 +3,47 @@ using System.Collections.Generic;
 using System.Globalization;
 using Xamarin.Forms;
 using System.Text.RegularExpressions;
-using Newtonsoft.Json;
 using Synesthesia.Models;
-using Rg.Plugins.Popup.Services;
-using Newtonsoft.Json.Linq;
-using OfficeOpenXml;
 using System.IO;
-using System.Text;
-using CsvHelper;
 using System.Threading.Tasks;
 using Xamarin.Essentials;
+using CsvHelper;
+
+using NPOI.SS.UserModel;
+using NPOI.XSSF.UserModel;
 
 namespace Synesthesia
 {
     public partial class ResultsPage : ContentPage
     {
-        private Dictionary<String, Color> colorMapping;
+        private Dictionary<string, List<Color>> colorMapping;
         private string tempFile;
-        public ResultsPage(Dictionary<String, Color> colorMapping)
+        private string Username;
+        public ResultsPage(Dictionary<string, List<Color>> colorMapping, string username)
         {
             InitializeComponent();
 
-            this.colorMapping = colorMapping;
+            this.Username = username;
 
-            ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
+            this.colorMapping = colorMapping;
         }
 
         public async void Button_Clicked(System.Object sender, System.EventArgs e)
         {
             string selection = Picker.Items[Picker.SelectedIndex];
 
-            string fileType;
-
             if (selection.Equals("CSV"))
             {
-                //fileType = "csv";
                 CreateCSV();
             }
             else
             {
-                //fileType = "xlsx";
                 CreateXLSX();
             }
 
             string email = EmailEntry.Text;
 
             await SendEmail(email);
-
-            /*SubmitJsonPackage pkg = new SubmitJsonPackage();
-            pkg.email = email;
-            pkg.fileType = fileType;
-
-            Dictionary<string, ColorJson> colors = new Dictionary<string, ColorJson>();
-            foreach (KeyValuePair<string, Color> entry in colorMapping)
-            {
-                Color c = entry.Value;
-                ColorJson json = new ColorJson();
-                json.r = c.R;
-                json.g = c.G;
-                json.b = c.B;
-                json.a = c.A;
-                json.h = c.Hue;
-                json.l = c.Luminosity;
-                colors.Add(entry.Key, json);
-            }
-
-            pkg.colors = colors;
-
-            await PopupNavigation.Instance.PushAsync(new PopupPage());
-            String result = RESTClient.Post(new Uri(App.url + "submit"), JsonConvert.SerializeObject(pkg));
-            await PopupNavigation.Instance.PopAsync();
-
-            JObject rss = JObject.Parse(result);
-
-            bool successful = (bool)rss["successfullySent"];
-
-            if (successful)
-                await Application.Current.MainPage.DisplayAlert("Success", "The data was successfully sent to your email.", "OK");
-            else
-                await Application.Current.MainPage.DisplayAlert("Error", "An error occurred. Please try again.", "OK");*/
         }
 
         public bool IsValidEmail(string email)
@@ -91,11 +53,9 @@ namespace Synesthesia
 
             try
             {
-                // Normalize the domain
                 email = Regex.Replace(email, @"(@)(.+)$", DomainMapper,
                                       RegexOptions.None, TimeSpan.FromMilliseconds(200));
 
-                // Examines the domain part of the email and normalizes it.
                 string DomainMapper(Match match)
                 {
                     // Use IdnMapping class to convert Unicode domain names.
@@ -155,16 +115,14 @@ namespace Synesthesia
 
         private void CreateCSV()
         {
-            tempFile = Path.GetTempFileName() + ".csv";
-            var records = new List<string[]>
-            {
-                new string[] {"Stimulus", "Red", "Green", "Blue", "Alpha", "Hue", "Luminosity"}
-            };
+            tempFile = Path.Combine(Path.GetTempPath(), "synesthesiaData.csv");
+            var records = new List<CsvColor>();
 
-            foreach(KeyValuePair<string, Color> pair in colorMapping)
+            foreach(KeyValuePair<string, List<Color>> pair in colorMapping)
             {
-                Color c = pair.Value;
-                records.Add(new string[] {pair.Key, c.R.ToString(), c.G.ToString(), c.B.ToString(), c.A.ToString(), c.Hue.ToString(), c.Luminosity.ToString() });
+                List<Color> colors = pair.Value;
+                foreach(Color c in colors)
+                    records.Add(new CsvColor {Stimulus = pair.Key, Red = c.R, Green = c.G, Blue = c.B, Alpha = c.A, Hue = c.Hue, Luminosity = c.Luminosity });
             }
 
             using (var writer = new StreamWriter(tempFile))
@@ -176,41 +134,70 @@ namespace Synesthesia
 
         private void CreateXLSX()
         {
-            tempFile = Path.GetTempFileName() + ".xlsx";
-            using (ExcelPackage excelPackage = new ExcelPackage())
+            tempFile = Path.Combine(Path.GetTempPath(), "synesthesiaData.xlsx");
+            IWorkbook workbook = new XSSFWorkbook();
+            ISheet sheet = workbook.CreateSheet("Sheet 1");
+
+            IRow row0 = sheet.CreateRow(0);
+            XSSFCellStyle trialStyle = (XSSFCellStyle)workbook.CreateCellStyle();
+            trialStyle.Alignment = HorizontalAlignment.Center;
+            for (int j = 0; j < 19; j++)
             {
-                excelPackage.Workbook.Properties.Title = "SynesthesiaResults";
-                excelPackage.Workbook.Properties.Created = DateTime.Now;
+                ICell cell = row0.CreateCell(j);
+                cell.CellStyle = trialStyle;
+            }
 
-                ExcelWorksheet worksheet = excelPackage.Workbook.Worksheets.Add("Sheet 1");
+            row0.GetCell(1).SetCellValue("Trial 1");
+            row0.GetCell(8).SetCellValue("Trial 2");
+            row0.GetCell(15).SetCellValue("Trial 3");
+            sheet.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(0, 0, 1, 7));
+            sheet.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(0, 0, 8, 14));
+            sheet.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(0, 0, 15, 21));
 
-                worksheet.Cells["A1"].Value = "Stimuls";
-                worksheet.Cells["A2"].Value = "Red";
-                worksheet.Cells["A3"].Value = "Green";
-                worksheet.Cells["A4"].Value = "Blue";
-                worksheet.Cells["A5"].Value = "Alpha";
-                worksheet.Cells["A6"].Value = "Hue";
-                worksheet.Cells["A7"].Value = "Luminosity";
+            IRow row1 = sheet.CreateRow(1);
+            row1.CreateCell(0).SetCellValue("Stimulus");
+            for (int j = 0; j < 3; j++)
+            {
+                row1.CreateCell(j * 7 + 1).SetCellValue("Red");
+                row1.CreateCell(j * 7 + 2).SetCellValue("Green");
+                row1.CreateCell(j * 7 + 3).SetCellValue("Blue");
+                row1.CreateCell(j * 7 + 4).SetCellValue("Alpha");
+                row1.CreateCell(j * 7 + 5).SetCellValue("Hue");
+                row1.CreateCell(j * 7 + 6).SetCellValue("Luminosity");
+                row1.CreateCell(j * 7 + 7).SetCellValue("Color");
+            }
 
-                int row = 2;
-                foreach (KeyValuePair<string, Color> pair in colorMapping)
+            int i = 2;
+            foreach (KeyValuePair<string, List<Color>> pair in colorMapping)
+            {
+                int col = 0;
+                IRow row = sheet.CreateRow(i);
+                List<Color> colors = pair.Value;
+
+                row.CreateCell(col).SetCellValue(pair.Key);
+
+                foreach(Color c in colors)
                 {
-                    int col = 1;
-                    Color c = pair.Value;
-                    worksheet.Cells[col, row].Value = pair.Key;
-                    worksheet.Cells[++col, row].Value = c.R;
-                    worksheet.Cells[++col, row].Value = c.G;
-                    worksheet.Cells[++col, row].Value = c.B;
-                    worksheet.Cells[++col, row].Value = c.A;
-                    worksheet.Cells[++col, row].Value = c.Hue;
-                    worksheet.Cells[++col, row].Value = c.Luminosity;
+                    row.CreateCell(++col).SetCellValue(c.R);
+                    row.CreateCell(++col).SetCellValue(c.G);
+                    row.CreateCell(++col).SetCellValue(c.B);
+                    row.CreateCell(++col).SetCellValue(c.A);
+                    row.CreateCell(++col).SetCellValue(c.Hue);
+                    row.CreateCell(++col).SetCellValue(c.Luminosity);
 
-                    row++;
+                    ICell colorCell = row.CreateCell(++col);
+                    XSSFCellStyle style = (XSSFCellStyle)workbook.CreateCellStyle();
+                    style.FillForegroundXSSFColor = new XSSFColor(c);
+                    style.FillPattern = FillPattern.SolidForeground;
+                    colorCell.CellStyle = style;
                 }
 
-                FileInfo fi = new FileInfo(tempFile);
-                excelPackage.SaveAs(fi);
+                i++;
             }
+
+            FileStream sw = File.Create(tempFile);
+            workbook.Write(sw);
+            sw.Close();
         }
 
         public async Task SendEmail(string email)
@@ -220,8 +207,8 @@ namespace Synesthesia
                 var message = new EmailMessage
                 {
                     Subject = "Your Synesthesia Data!",
-                    Body = "The requested file type is attached.",
-                    To = new List<string> {email },
+                    Body = "The requested file type is attached. This email is from user: " + Username,
+                    To = new List<string> { email },
                 };
 
                 message.Attachments.Add(new EmailAttachment(tempFile));

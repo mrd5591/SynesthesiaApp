@@ -6,7 +6,7 @@ namespace Synesthesia
 {
     public partial class App : Application
     {
-        public static string url = "https://synesthesia-315922.uk.r.appspot.com/";
+        //public static string url = "https://synesthesia-315922.uk.r.appspot.com/";
         public App()
         {
             InitializeComponent();
