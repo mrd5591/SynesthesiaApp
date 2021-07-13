@@ -4,8 +4,8 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:f9p="clr-namespace:Forms9Patch;assembly=Forms9Patch"
     x:Class="Synesthesia.StartPage"
-    Padding="0,50,0,0"
-    BackgroundColor="White">
+    Padding="20,50,20,0"
+    BackgroundColor="LightGoldenrodYellow">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
@@ -14,55 +14,58 @@
             <RowDefinition Height="*"/>
             <RowDefinition Height="2*"/>
         </Grid.RowDefinitions>
-        <Image Source="synTitle.png" BackgroundColor="Transparent" Margin="20,0" Grid.Row="0"/>
-        <f9p:Button x:Name="StartTestButton"
-                VerticalOptions="CenterAndExpand"
-                HorizontalOptions="CenterAndExpand"
-                HorizontalTextAlignment="Center"
-                VerticalTextAlignment="Center"
-                Margin="0"
-                Padding="20"
-                Text="Start Test"
-                BackgroundColor="LightBlue"
-                IsEnabled="True"
-                Clicked="StartTestButton_Clicked" Grid.Row="1"
-                TextColor="Black"
-                Lines="0"
-                AutoFit="Width"
-                LineBreakMode="NoWrap"/>
+        <Frame CornerRadius="{OnIdiom Phone=10, Tablet=30}"
+               Grid.Row="1"
+               BackgroundColor="LightBlue"
+               BorderColor="Black"
+               VerticalOptions="CenterAndExpand"
+               HorizontalOptions="CenterAndExpand"
+               Padding="0">
+               <Button x:Name="StartTestButton"
+                            Text="Start Test"
+                            BackgroundColor="Transparent"
+                            BorderColor="Transparent"
+                            IsEnabled="True"
+                            Clicked="StartTestButton_Clicked"
+                            TextColor="Black"
+                            FontSize="{OnIdiom Tablet=40, Phone=20}"
+                            WidthRequest="{OnIdiom Tablet=200, Phone=150}"
+                            HeightRequest="{OnIdiom Tablet=100, Phone=75}"
+                            FontFamily="TrebuchetMS"/>
+        </Frame>
         <StackLayout Grid.Row="2" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
             <Grid HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
-            </Grid.ColumnDefinitions>
-            <Label TextColor="Black" Grid.Column="0" Text="Letters" Margin="0,0,5,0" HorizontalOptions="EndAndExpand" VerticalOptions="CenterAndExpand" VerticalTextAlignment="Center"/>
-            <Switch x:Name="Letters" Grid.Column="1" Toggled="Letters_Toggled" HorizontalOptions="StartAndExpand" VerticalOptions="CenterAndExpand"/>
-        </Grid>
-        <Grid HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
-            </Grid.ColumnDefinitions>
-            <Label TextColor="Black" Grid.Column="0" Text="Numbers" Margin="0,0,5,0" HorizontalOptions="EndAndExpand" VerticalOptions="CenterAndExpand" VerticalTextAlignment="Center"/>
-            <Switch x:Name="Numbers" Grid.Column="1" Toggled="Numbers_Toggled" HorizontalOptions="StartAndExpand" VerticalOptions="CenterAndExpand"/>
-        </Grid>
-        <Grid HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
-            </Grid.ColumnDefinitions>
-            <Label TextColor="Black" Grid.Column="0" Text="Days of the Week" Margin="0,0,5,0" HorizontalOptions="EndAndExpand" VerticalOptions="CenterAndExpand" VerticalTextAlignment="Center"/>
-            <Switch x:Name="DotW" Grid.Column="1" Toggled="DotW_Toggled" HorizontalOptions="StartAndExpand" VerticalOptions="CenterAndExpand"/>
-        </Grid>
-        <Grid HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
-            </Grid.ColumnDefinitions>
-            <Label TextColor="Black" Grid.Column="0" Text="Months" Margin="0,0,5,0" HorizontalOptions="EndAndExpand" VerticalOptions="CenterAndExpand" VerticalTextAlignment="Center"/>
-            <Switch x:Name="Months" Grid.Column="1" Toggled="Months_Toggled" HorizontalOptions="StartAndExpand" VerticalOptions="CenterAndExpand"/>
-        </Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <f9p:Label TextColor="Black" Grid.Column="0" Text="Letters" HorizontalOptions="EndAndExpand" VerticalOptions="CenterAndExpand" VerticalTextAlignment="Center" HorizontalTextAlignment="Center" FontSize="{OnIdiom Phone=Large, Tablet=50}" Lines="1" AutoFit="Width" LineBreakMode="NoWrap" FontFamily="TrebuchetMS"/>
+                <Switch x:Name="Letters" Grid.Column="1" Toggled="Letters_Toggled" HorizontalOptions="StartAndExpand" VerticalOptions="CenterAndExpand" Scale="{OnIdiom Tablet=1.9, Phone=1}" Margin="{OnIdiom Tablet='40,0,0,0'}" ThumbColor="Orange" OnColor="CornflowerBlue"/>
+            </Grid>
+            <Grid HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <f9p:Label TextColor="Black" Grid.Column="0" Text="Numbers" HorizontalOptions="EndAndExpand" VerticalOptions="CenterAndExpand" VerticalTextAlignment="Center" FontSize="{OnIdiom Phone=Large, Tablet=50}" Lines="1" AutoFit="Width" LineBreakMode="NoWrap" FontFamily="TrebuchetMS"/>
+                <Switch x:Name="Numbers" Grid.Column="1" Toggled="Numbers_Toggled" HorizontalOptions="StartAndExpand" VerticalOptions="CenterAndExpand" Scale="{OnIdiom Tablet=1.9, Phone=1}" Margin="{OnIdiom Tablet='40,0,0,0'}" ThumbColor="Orange" OnColor="CornflowerBlue"/>
+            </Grid>
+            <Grid HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <f9p:Label TextColor="Black" Grid.Column="0" Text="Days of the Week" HorizontalOptions="EndAndExpand" VerticalOptions="CenterAndExpand" VerticalTextAlignment="Center" FontSize="{OnIdiom Phone=Large, Tablet=50}" Lines="1" AutoFit="Width" LineBreakMode="NoWrap" FontFamily="TrebuchetMS"/>
+                <Switch x:Name="DotW" Grid.Column="1" Toggled="DotW_Toggled" HorizontalOptions="StartAndExpand" VerticalOptions="CenterAndExpand" Scale="{OnIdiom Tablet=1.9, Phone=1}" Margin="{OnIdiom Tablet='40,0,0,0'}" ThumbColor="Orange" OnColor="CornflowerBlue"/>
+            </Grid>
+            <Grid HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <f9p:Label TextColor="Black" Grid.Column="0" Text="Months" HorizontalOptions="EndAndExpand" VerticalOptions="CenterAndExpand" VerticalTextAlignment="Center" FontSize="{OnIdiom Phone=Large, Tablet=50}" Lines="1" AutoFit="Width" LineBreakMode="NoWrap" FontFamily="TrebuchetMS"/>
+                <Switch x:Name="Months" Grid.Column="1" Toggled="Months_Toggled" HorizontalOptions="StartAndExpand" VerticalOptions="CenterAndExpand" Scale="{OnIdiom Tablet=1.9, Phone=1}" Margin="{OnIdiom Tablet='40,0,0,0'}" ThumbColor="Orange" OnColor="CornflowerBlue"/>
+            </Grid>
         </StackLayout>
         <Grid Grid.Row="3">
             <Grid.ColumnDefinitions>
@@ -70,15 +73,29 @@
                 <ColumnDefinition Width="2*"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            <Entry x:Name="UsernameEntry"
-               Placeholder="Username"
-               Margin="2"
-               VerticalOptions="CenterAndExpand"
-               HorizontalOptions="FillAndExpand"
-               HorizontalTextAlignment="Center"
-               BackgroundColor="GhostWhite"
-               TextColor="Black"
-                   Grid.Column="1"/>
+            <StackLayout Grid.Column="1"
+                         BackgroundColor="PeachPuff">
+                <Label Text="UID:"
+                       VerticalOptions="CenterAndExpand"
+                       HorizontalOptions="FillAndExpand"
+                       HorizontalTextAlignment="Center"
+                       VerticalTextAlignment="End"
+                       TextColor="Black"
+                       FontSize="{OnIdiom Tablet=50, Phone=25}"
+                       HeightRequest="{OnIdiom Tablet=100, Phone=50}"
+                       FontFamily="TrebuchetMS"
+                       FontAttributes="Italic"/>
+                <Label x:Name="UID"
+                       Margin="2"
+                       VerticalOptions="CenterAndExpand"
+                       HorizontalOptions="FillAndExpand"
+                       HorizontalTextAlignment="Center"
+                       VerticalTextAlignment="Center"
+                       TextColor="Black"
+                       HeightRequest="{OnIdiom Tablet=100, Phone=50}"
+                       FontSize="{OnIdiom Tablet=50, Phone=25}"
+                       FontFamily="TrebuchetMS"/>
+            </StackLayout>
         </Grid>
     </Grid>
 </ContentPage>

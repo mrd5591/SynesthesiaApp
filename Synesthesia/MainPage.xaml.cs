@@ -25,6 +25,13 @@ namespace Synesthesia
 
         private Random rng = new Random();
 
+        protected override async void OnAppearing()
+        {
+            base.OnAppearing();
+
+            await DisplayAlert("Instructions", "Slide the three open circles to create the color that you associate with the stimulus below. Select \"No Color\" if you do not associate a color with the displayed stimulus.", "OK");
+        }
+
         public MainPage(bool letters, bool numbers, bool dow, bool months, string username)
         {
             InitializeComponent();
@@ -101,7 +108,9 @@ namespace Synesthesia
 
             if(questionCount == questions.Count - 1)
             {
-                await Navigation.PushAsync(new ResultsPage(colorAssociations, Username));
+                var previousPage = Navigation.NavigationStack.LastOrDefault();
+                await Navigation.PushAsync(new ResultsListPage(colorAssociations, Username));
+                Navigation.RemovePage(previousPage);
                 NextButton.IsEnabled = true;
             } else
             {

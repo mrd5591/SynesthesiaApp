@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Synesthesia.Models;
 using Xamarin.Forms;
+using System;
 
 namespace Synesthesia
 {
@@ -17,6 +18,8 @@ namespace Synesthesia
             Groups.Add("DotW", false);
             Groups.Add("Months", false);
 
+            GenerateUID();
+
             BindingContext = this;
         }
 
@@ -28,12 +31,12 @@ namespace Synesthesia
             bool dow = Groups["DotW"];
             bool months = Groups["Months"];
 
-            if((letters || numbers || dow || months) && !string.IsNullOrWhiteSpace(UsernameEntry.Text))
+            if(letters || numbers || dow || months)
             {
-                await Navigation.PushAsync(new MainPage(letters, numbers, dow, months, UsernameEntry.Text));
+                await Navigation.PushAsync(new MainPage(letters, numbers, dow, months, UID.Text));
             } else 
             {
-                await Application.Current.MainPage.DisplayAlert("Error", "Select at least one stimulus group and enter a username", "OK");
+                await Application.Current.MainPage.DisplayAlert("Error", "Select at least one stimulus group", "OK");
                 StartTestButton.IsEnabled = true;
             }
         }
@@ -63,6 +66,14 @@ namespace Synesthesia
             base.OnAppearing();
 
             StartTestButton.IsEnabled = true;
+        }
+
+        private void GenerateUID()
+        {
+            Random random = new Random();
+            const string chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+            UID.Text = new string(Enumerable.Repeat(chars, 8)
+              .Select(s => s[random.Next(s.Length)]).ToArray());
         }
     }
 }

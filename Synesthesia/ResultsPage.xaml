@@ -3,59 +3,98 @@
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     x:Class="Synesthesia.ResultsPage"
-    BackgroundColor="White">
+    xmlns:f9p="clr-namespace:Forms9Patch;assembly=Forms9Patch"
+    BackgroundColor="LightGoldenrodYellow">
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="2*"/>
+            <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="2*"/>
         </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="3*"/>
-            <ColumnDefinition Width="*"/>
-        </Grid.ColumnDefinitions>
-        <Frame VerticalOptions="EndAndExpand"
-               HorizontalOptions="FillAndExpand"
+        <Label TextColor="Black"
                Grid.Row="0"
-               BackgroundColor="White"
-               Grid.Column="1">
-            <Entry x:Name="EmailEntry"
-                   Placeholder="Email..."
-                   VerticalOptions="CenterAndExpand"
-                   HorizontalOptions="FillAndExpand"
-                   TextChanged="Entry_TextChanged"
-                   HorizontalTextAlignment="Center"
-                   BackgroundColor="GhostWhite"
-                   TextColor="Black"/>
-        </Frame>
-        <Picker x:Name="Picker"
-                Title="Pick a file type"
-                Grid.Row="1"
-                Grid.Column="1"
-                Margin="20"
-                HorizontalOptions="FillAndExpand"
-                VerticalOptions="CenterAndExpand"
-                HorizontalTextAlignment="Center"
-                SelectedIndexChanged="Picker_SelectedIndexChanged"
-                BackgroundColor="GhostWhite"
-                TextColor="Black">
-            <Picker.ItemsSource>
-                <x:Array Type="{x:Type x:String}">
-                    <x:String>CSV</x:String>
-                    <x:String>XLSX</x:String>
-                </x:Array>
-            </Picker.ItemsSource>
-        </Picker>
-        <Button x:Name="ResultButton"
-                Text="Send Results"
-                BackgroundColor="DarkSalmon"
-                Grid.Row="2"
-                Grid.Column="1"
-                VerticalOptions="StartAndExpand"
-                HorizontalOptions="FillAndExpand"
-                Padding="25,0,25,0"
-                Clicked="Button_Clicked"
-                IsEnabled="False"/>
+               VerticalTextAlignment="Center"
+               HorizontalTextAlignment="Center"
+               VerticalOptions="CenterAndExpand"
+               HorizontalOptions="StartAndExpand"
+               FontSize="{OnIdiom Tablet=30, Phone=15}">
+            <Label.Text>
+                Thank you for taking this test. If you would like to share your results with a researcher, write down your UID or take a screenshot. Then, enter the e-mail address of the person who should receive your results and click SEND RESULTS. This test does not store any identifying information except for this code. If you send your results to someone else, you will also need to give them this ID so that they know which results are yours.
+            </Label.Text>
+        </Label>
+        <StackLayout Grid.Row="1"
+                     BackgroundColor="PeachPuff"
+                     HorizontalOptions="CenterAndExpand"
+                     VerticalOptions="CenterAndExpand">
+                <Label Text="UID:"
+                       VerticalOptions="CenterAndExpand"
+                       HorizontalOptions="CenterAndExpand"
+                       HorizontalTextAlignment="Center"
+                       VerticalTextAlignment="Center"
+                       TextColor="Black"
+                       FontSize="{OnIdiom Tablet=50, Phone=25}"
+                       FontFamily="TrebuchetMS"
+                       FontAttributes="Italic"
+                       Padding="0"/>
+                <Label x:Name="UID"
+                       Margin="2"
+                       VerticalOptions="CenterAndExpand"
+                       HorizontalOptions="CenterAndExpand"
+                       HorizontalTextAlignment="Center"
+                       VerticalTextAlignment="Center"
+                       TextColor="Black"
+                       FontSize="{OnIdiom Tablet=50, Phone=25}"
+                       FontFamily="TrebuchetMS"/>
+        </StackLayout>
+        <StackLayout Grid.Row="2"
+                     HorizontalOptions="CenterAndExpand"
+                     VerticalOptions="StartAndExpand">
+            <Frame VerticalOptions="CenterAndExpand"
+                   HorizontalOptions="CenterAndExpand"
+                   BackgroundColor="LightGoldenrodYellow"
+                   Padding="5"
+                   WidthRequest="{OnIdiom Tablet=600, Phone=300}"
+                   HeightRequest="{OnIdiom Tablet=100, Phone=50}">
+                <Entry x:Name="EmailEntry"
+                       Placeholder="Email..."
+                       VerticalOptions="FillAndExpand"
+                       HorizontalOptions="FillAndExpand"
+                       TextChanged="Entry_TextChanged"
+                       HorizontalTextAlignment="Center"
+                       BackgroundColor="PeachPuff"
+                       TextColor="Black"
+                       Grid.Column="1"
+                       FontSize="{OnIdiom Tablet=50,Phone=20}"
+                       FontFamily="TrebuchetMS"
+                       Keyboard="Email"/>
+            </Frame>
+            <Frame CornerRadius="{OnIdiom Phone=10, Tablet=30}"
+                   BackgroundColor="LightSalmon"
+                   BorderColor="Black"
+                   VerticalOptions="StartAndExpand"
+                   HorizontalOptions="CenterAndExpand"
+                   Padding="0"
+                   Margin="5">
+                   <f9p:Button x:Name="ResultButton"
+                                Text="Send Results"
+                                TextColor="Black"
+                                BackgroundColor="Transparent"
+                                BorderColor="Transparent"
+                                VerticalOptions="StartAndExpand"
+                                HorizontalOptions="CenterAndExpand"
+                                HorizontalTextAlignment="Center"
+                                VerticalTextAlignment="Center"
+                                Padding="25,0,25,0"
+                                Clicked="Button_Clicked"
+                                Lines="1"
+                                AutoFit="Width"
+                                LineBreakMode="NoWrap"
+                                FontSize="30"
+                                WidthRequest="{OnIdiom Tablet=200, Phone=100}"
+                                HeightRequest="{OnIdiom Tablet=100, Phone=50}"
+                                FontFamily="TrebuchetMS"
+                                IsEnabled="False"/>
+            </Frame>
+        </StackLayout>
     </Grid>
 </ContentPage>

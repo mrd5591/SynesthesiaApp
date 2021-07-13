@@ -19,28 +19,24 @@ namespace Synesthesia
         private Dictionary<string, List<Color>> colorMapping;
         private string tempFile;
         private string Username;
-        public ResultsPage(Dictionary<string, List<Color>> colorMapping, string username)
+        private double score;
+
+        public ResultsPage(Dictionary<string, List<Color>> colorMapping, string username, double score)
         {
             InitializeComponent();
 
             this.Username = username;
 
             this.colorMapping = colorMapping;
+
+            this.score = score;
+
+            UID.Text = username;
         }
 
         public async void Button_Clicked(System.Object sender, System.EventArgs e)
         {
-            string selection = Picker.Items[Picker.SelectedIndex];
-
-            if (selection.Equals("CSV"))
-            {
-                CreateCSV();
-            }
-            else
-            {
-                CreateXLSX();
-            }
-
+            CreateXLSX();
             string email = EmailEntry.Text;
 
             await SendEmail(email);
@@ -91,7 +87,7 @@ namespace Synesthesia
         void Entry_TextChanged(System.Object sender, Xamarin.Forms.TextChangedEventArgs e)
         {
             string email = ((Entry)sender).Text;
-            if (!string.IsNullOrWhiteSpace(email) && IsValidEmail(email) && Picker.SelectedItem != null)
+            if (!string.IsNullOrWhiteSpace(email) && IsValidEmail(email))
             {
                 ResultButton.IsEnabled = true;
             } else
@@ -100,20 +96,7 @@ namespace Synesthesia
             }
         }
 
-        void Picker_SelectedIndexChanged(System.Object sender, System.EventArgs e)
-        {
-            string email = EmailEntry.Text;
-            if (!string.IsNullOrWhiteSpace(email) && IsValidEmail(email) && Picker.SelectedItem != null)
-            {
-                ResultButton.IsEnabled = true;
-            }
-            else
-            {
-                ResultButton.IsEnabled = false;
-            }
-        }
-
-        private void CreateCSV()
+        /*private void CreateCSV()
         {
             tempFile = Path.Combine(Path.GetTempPath(), "synesthesiaData.csv");
             var records = new List<CsvColor>();
@@ -130,7 +113,7 @@ namespace Synesthesia
             {
                 csv.WriteRecords(records);
             }
-        }
+        }*/
 
         private void CreateXLSX()
         {
@@ -139,32 +122,52 @@ namespace Synesthesia
             ISheet sheet = workbook.CreateSheet("Sheet 1");
 
             IRow row0 = sheet.CreateRow(0);
-            XSSFCellStyle trialStyle = (XSSFCellStyle)workbook.CreateCellStyle();
-            trialStyle.Alignment = HorizontalAlignment.Center;
-            for (int j = 0; j < 19; j++)
+
+            for(int j = 0; j < 22; j++)
             {
-                ICell cell = row0.CreateCell(j);
-                cell.CellStyle = trialStyle;
+                row0.CreateCell(j);
             }
 
+            XSSFCellStyle trialText = (XSSFCellStyle)workbook.CreateCellStyle();
+            trialText.Alignment = HorizontalAlignment.Center;
+            trialText.BorderLeft = BorderStyle.Thick;
+            trialText.BorderRight = BorderStyle.Thick;
+
+            XSSFCellStyle leftBoldBorder = (XSSFCellStyle)workbook.CreateCellStyle();
+            leftBoldBorder.BorderLeft = BorderStyle.Thick;
+
+            XSSFCellStyle rightBoldBorder = (XSSFCellStyle)workbook.CreateCellStyle();
+            rightBoldBorder.BorderRight = BorderStyle.Thick;
+
             row0.GetCell(1).SetCellValue("Trial 1");
-            row0.GetCell(8).SetCellValue("Trial 2");
-            row0.GetCell(15).SetCellValue("Trial 3");
-            sheet.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(0, 0, 1, 7));
-            sheet.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(0, 0, 8, 14));
-            sheet.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(0, 0, 15, 21));
+            row0.GetCell(2).SetCellValue("Trial 2");
+            row0.GetCell(3).SetCellValue("Trial 3");
+
+            row0.GetCell(4).SetCellValue("Trial 1");
+            row0.GetCell(4).CellStyle = trialText;
+            row0.GetCell(11).SetCellValue("Trial 2");
+            row0.GetCell(11).CellStyle = trialText;
+            row0.GetCell(18).SetCellValue("Trial 3");
+            row0.GetCell(18).CellStyle = trialText;
+            sheet.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(0, 0, 4, 9));
+            sheet.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(0, 0, 10, 15));
+            sheet.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(0, 0, 16, 21));
 
             IRow row1 = sheet.CreateRow(1);
             row1.CreateCell(0).SetCellValue("Stimulus");
+            row1.CreateCell(1).SetCellValue("Color");
+            row1.CreateCell(2).SetCellValue("Color");
+            row1.CreateCell(3).SetCellValue("Color");
             for (int j = 0; j < 3; j++)
             {
-                row1.CreateCell(j * 7 + 1).SetCellValue("Red");
-                row1.CreateCell(j * 7 + 2).SetCellValue("Green");
-                row1.CreateCell(j * 7 + 3).SetCellValue("Blue");
-                row1.CreateCell(j * 7 + 4).SetCellValue("Alpha");
-                row1.CreateCell(j * 7 + 5).SetCellValue("Hue");
-                row1.CreateCell(j * 7 + 6).SetCellValue("Luminosity");
-                row1.CreateCell(j * 7 + 7).SetCellValue("Color");
+                row1.CreateCell(j * 6 + 4).SetCellValue("Red");
+                row1.GetCell(j * 6 + 4).CellStyle = leftBoldBorder;
+                row1.CreateCell(j * 6 + 5).SetCellValue("Green");
+                row1.CreateCell(j * 6 + 6).SetCellValue("Blue");
+                row1.CreateCell(j * 6 + 7).SetCellValue("Alpha");
+                row1.CreateCell(j * 6 + 8).SetCellValue("Hue");
+                row1.CreateCell(j * 6 + 9).SetCellValue("Luminosity");
+                row1.GetCell(j * 6 + 9).CellStyle = rightBoldBorder;
             }
 
             int i = 2;
@@ -176,24 +179,40 @@ namespace Synesthesia
 
                 row.CreateCell(col).SetCellValue(pair.Key);
 
+                int colIndex = 0;
                 foreach(Color c in colors)
                 {
-                    row.CreateCell(++col).SetCellValue(c.R);
-                    row.CreateCell(++col).SetCellValue(c.G);
-                    row.CreateCell(++col).SetCellValue(c.B);
-                    row.CreateCell(++col).SetCellValue(c.A);
-                    row.CreateCell(++col).SetCellValue(c.Hue);
-                    row.CreateCell(++col).SetCellValue(c.Luminosity);
-
                     ICell colorCell = row.CreateCell(++col);
+                    row.GetCell(col).SetCellValue("\t");
                     XSSFCellStyle style = (XSSFCellStyle)workbook.CreateCellStyle();
                     style.FillForegroundXSSFColor = new XSSFColor(c);
                     style.FillPattern = FillPattern.SolidForeground;
                     colorCell.CellStyle = style;
+
+                    int t = 3 + (col-1) * 6 + ++colIndex;
+                    row.CreateCell(t).SetCellValue(c.R);
+                    row.GetCell(t).CellStyle = leftBoldBorder;
+                    row.CreateCell(3 + (col - 1) * 6 + ++colIndex).SetCellValue(c.G);
+                    row.CreateCell(3 + (col - 1) * 6 + ++colIndex).SetCellValue(c.B);
+                    row.CreateCell(3 + (col - 1) * 6 + ++colIndex).SetCellValue(c.A);
+                    row.CreateCell(3 + (col - 1) * 6 + ++colIndex).SetCellValue(c.Hue);
+                    t = 3 + (col - 1) * 6 + ++colIndex;
+                    row.CreateCell(t).SetCellValue(c.Luminosity);
+                    row.GetCell(t).CellStyle = rightBoldBorder;
+
+                    colIndex = 0;
                 }
 
                 i++;
             }
+
+            IRow uidRow = sheet.CreateRow(++i);
+            uidRow.CreateCell(0).SetCellValue("UID");
+            uidRow.CreateCell(1).SetCellValue(Username);
+
+            IRow scoreRow = sheet.CreateRow(++i);
+            scoreRow.CreateCell(0).SetCellValue("Score");
+            scoreRow.CreateCell(1).SetCellValue(score);
 
             FileStream sw = File.Create(tempFile);
             workbook.Write(sw);

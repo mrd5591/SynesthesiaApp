@@ -27,8 +27,10 @@
     <MtouchArch>x86_64</MtouchArch>
     <MtouchLink>None</MtouchLink>
     <MtouchDebug>true</MtouchDebug>
-    <CodesignKey>Apple Distribution: Matthew Davidson (RV5KP9HGS3)</CodesignKey>
+    <CodesignKey>iPhone Distribution: Matthew Davidson (RV5KP9HGS3)</CodesignKey>
     <LangVersion>latest</LangVersion>
+    <CodesignProvision>Synesthesia TestFlight</CodesignProvision>
+    <CodesignEntitlements>Entitlements.plist</CodesignEntitlements>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|iPhoneSimulator' ">
     <DebugType>none</DebugType>
@@ -68,10 +70,10 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <MtouchArch>ARM64</MtouchArch>
-    <CodesignKey>Apple Development: mrd5591@icloud.com (T24ABXBR2B)</CodesignKey>
+    <CodesignKey>iPhone Distribution: Matthew Davidson (RV5KP9HGS3)</CodesignKey>
     <CodesignEntitlements>Entitlements.plist</CodesignEntitlements>
     <MtouchLink>SdkOnly</MtouchLink>
-    <CodesignProvision>iOS Team Provisioning Profile: com.exnihilocreations.Synesthesia</CodesignProvision>
+    <CodesignProvision>Synesthesia TestFlight</CodesignProvision>
 <MtouchSdkVersion>14.5</MtouchSdkVersion>
 <MtouchExtraArgs>--registrar:static -v -v -v -v</MtouchExtraArgs>
 <LangVersion>latest</LangVersion>
@@ -126,12 +128,6 @@
     <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Icon20.png">
       <Visible>false</Visible>
     </ImageAsset>
-    <BundleResource Include="Resources\tab_about.png" />
-    <BundleResource Include="Resources\tab_about%402x.png" />
-    <BundleResource Include="Resources\tab_about%403x.png" />
-    <BundleResource Include="Resources\tab_feed.png" />
-    <BundleResource Include="Resources\tab_feed%402x.png" />
-    <BundleResource Include="Resources\tab_feed%403x.png" />
     <BundleResource Include="Resources\xamarin_logo.png" />
     <BundleResource Include="Resources\xamarin_logo%402x.png" />
     <BundleResource Include="Resources\xamarin_logo%403x.png" />
@@ -155,12 +151,6 @@
       <Project>{B0B64F94-A302-4016-8CAC-DB07B76E6D67}</Project>
       <Name>Synesthesia</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidResource Include="Resources\check.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <BundleResource Include="Resources\synTitle.png" />
   </ItemGroup>
   <ProjectExtensions>
     <MonoDevelop>

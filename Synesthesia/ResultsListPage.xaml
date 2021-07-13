@@ -1,0 +1,94 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<ContentPage
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    x:Class="Synesthesia.ResultsListPage"
+    xmlns:f9p="clr-namespace:Forms9Patch;assembly=Forms9Patch"
+    BackgroundColor="LightGoldenrodYellow">
+    <StackLayout>
+        <StackLayout VerticalOptions="Start">
+            <Label Text="Results"
+               HorizontalOptions="Center"
+               FontSize="{OnIdiom Tablet=100, Phone=50}"
+               FontFamily="TrebuchetMS"/>
+        </StackLayout>
+        <ScrollView VerticalOptions="StartAndExpand"
+                    VerticalScrollBarVisibility="Never">
+            <StackLayout BindableLayout.ItemsSource="{Binding colorMapping}"
+                         x:Name="ResultListView"
+                         BackgroundColor="Black"
+                         Margin="{OnIdiom Tablet='150,0,150,0'}">
+                <BindableLayout.ItemTemplate>
+                    <DataTemplate>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <f9p:Label Text="{Binding Key}"
+                                       TextColor="Black"
+                                       Grid.Column="0"
+                                       HorizontalOptions="Center"
+                                       VerticalOptions="Center"
+                                       Lines="1"
+                                       AutoFit="Width"
+                                       LineBreakMode="NoWrap"
+                                       FontSize="{OnIdiom Phone=30, Tablet=40}"
+                                       HorizontalTextAlignment="Center"
+                                       VerticalTextAlignment="Center"/>
+                            <BoxView Color="{Binding Value[0]}"
+                                     Grid.Column="1"/>
+                            <BoxView Color="{Binding Value[1]}"
+                                     Grid.Column="2"/>
+                            <BoxView Color="{Binding Value[2]}"
+                                     Grid.Column="3"/>
+                        </Grid>
+                    </DataTemplate>
+                </BindableLayout.ItemTemplate>
+            </StackLayout>
+        </ScrollView>
+        <StackLayout VerticalOptions="End"
+                     MinimumHeightRequest="{OnIdiom Tablet=200, Phone=100}">
+            <Grid Padding="10"
+                  VerticalOptions="EndAndExpand">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Label  x:Name="result"
+                        Text="Score = ..."
+                        FontSize="{OnIdiom Tablet=40, Phone=20}"
+                        HorizontalOptions="Center"
+                        VerticalOptions="Center"
+                        Grid.Column="0"/>
+                <Frame CornerRadius="{OnIdiom Phone=10, Tablet=30}"
+                       Grid.Column="1"
+                       BackgroundColor="LightSalmon"
+                       BorderColor="Black"
+                       HorizontalOptions="End"
+                       VerticalOptions="End"
+                       Padding="0"
+                       Margin="0,0,15,0"
+                       HeightRequest="{OnIdiom Tablet=100, Phone=75}"
+                       WidthRequest="{OnIdiom Tablet=250, Phone=125}">
+                    <f9p:Button x:Name="NextButton"
+                                Text="Next"
+                                Clicked="Button_Clicked"
+                                TextColor="Black"
+                                BackgroundColor="Transparent"
+                                BorderColor="Transparent"
+                                FontSize="{OnIdiom Phone=30, Tablet=60}"
+                                VerticalOptions="Fill"
+                                HorizontalOptions="Fill"
+                                Lines="1"
+                                AutoFit="Width"
+                                LineBreakMode="NoWrap"
+                                Padding="0"
+                                FontFamily="TrebuchetMS"/>
+                </Frame>
+            </Grid>
+        </StackLayout>
+    </StackLayout>
+</ContentPage>

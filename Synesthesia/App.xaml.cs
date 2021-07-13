@@ -6,12 +6,11 @@ namespace Synesthesia
 {
     public partial class App : Application
     {
-        //public static string url = "https://synesthesia-315922.uk.r.appspot.com/";
         public App()
         {
             InitializeComponent();
 
-            MainPage = new NavigationPage(new StartPage());
+            MainPage = new NavigationPage(new OpeningPage());
         }
 
         protected override void OnStart()

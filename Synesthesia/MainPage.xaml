@@ -36,13 +36,13 @@
                       VerticalOptions="CenterAndExpand"
                       CheckedChanged="Checkbox_CheckedChanged"
                       Margin="0,0,5,0"
-                      Scale="1.5"/>
+                      Scale="{OnIdiom Tablet=2, Phone=1.5}"/>
             <f9p:Label Text="No color"
                    TextColor="Gray"
                    HorizontalOptions="StartAndExpand"
                    VerticalOptions="CenterAndExpand"
                    Grid.Column="1"
-                   FontSize="30"/>
+                   FontSize="40"/>
         </Grid>
         <Grid Grid.Row="2" Padding="5">
             <Grid.ColumnDefinitions>
@@ -65,14 +65,13 @@
                    FontSize="100">
             </f9p:Label>
         </Grid>
-        <f9p:Button x:Name="NextButton"
+        <Button x:Name="NextButton"
                     Text="Next"
-                    LineBreakMode="NoWrap"
-                    Lines="0"
-                    AutoFit="Width"
+                    TextColor="Black"
                     BackgroundColor="LightBlue"
                     Grid.Row="3"
                     Clicked="Button_Clicked"
-                    FontSize="100"/>
+                    FontSize="{OnIdiom Tablet=100, Phone=50}"
+                    FontFamily="TrebuchetMS"/>
     </Grid>
 </ContentPage>

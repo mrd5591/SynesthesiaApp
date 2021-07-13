@@ -15,7 +15,6 @@
     <PackageReference Include="Xamarin.Forms" Version="5.0.0.2012" />  
     <PackageReference Include="ColorPicker.Xamarin.Forms" Version="1.3.4.11" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
-    <PackageReference Include="Rg.Plugins.Popup" Version="2.0.0.11" />
     <PackageReference Include="Forms9Patch" Version="2.4.9" />
     <PackageReference Include="CsvHelper" Version="27.1.0" />
     <PackageReference Include="NPOI" Version="2.5.3" />
