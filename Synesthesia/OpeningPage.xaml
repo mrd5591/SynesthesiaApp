@@ -6,43 +6,49 @@
     Padding="20,50,20,0"
     BackgroundColor="LightGoldenrodYellow">
     <StackLayout>
-        <Label Text="Color-Association Test"
-               TextColor="Black"
-               HorizontalOptions="CenterAndExpand"
-               VerticalOptions="CenterAndExpand"
-               FontSize="{OnIdiom Tablet=60,Phone=30}"
-               FontFamily="TrebuchetMS"
-               FontAttributes="Bold"/>
-        <Label TextColor="Black"
-               VerticalTextAlignment="Center"
-               HorizontalTextAlignment="Center"
-               HorizontalOptions="FillAndExpand"
-               VerticalOptions="CenterAndExpand"
-               FontSize="{OnIdiom Tablet=30, Phone=18}"
-               BackgroundColor="PeachPuff"
-               Padding="10">
-            <Label.Text>
-                This simple test will determine how consistently you associate colors with Letters, Numbers, Days of the Week, and Months. The following screen will give you the option to select as many of these test categories as you like. Tap CONTINUE to proceed.
-            </Label.Text>
-        </Label>
-        <Frame CornerRadius="{OnIdiom Phone=10, Tablet=30}"
-               Grid.Row="1"
-               BackgroundColor="LightBlue"
-               BorderColor="Black"
-               VerticalOptions="CenterAndExpand"
-               HorizontalOptions="CenterAndExpand"
-               Padding="0">
-               <Button x:Name="ContinueButton"
-                            Text="Continue"
-                            BackgroundColor="Transparent"
-                            BorderColor="Transparent"
-                            IsEnabled="True"
-                            Clicked="NextPageButton_Clicked"
-                            TextColor="Black"
-                            FontSize="{OnIdiom Tablet=40, Phone=20}"
-                            WidthRequest="{OnIdiom Tablet=200, Phone=150}"
-                            HeightRequest="{OnIdiom Tablet=100, Phone=75}"
-                            FontFamily="TrebuchetMS"/>
-        </Frame>
+        <StackLayout VerticalOptions="Start">
+            <Label Text="Color-Association Test"
+                   TextColor="Black"
+                   HorizontalOptions="CenterAndExpand"
+                   VerticalOptions="CenterAndExpand"
+                   FontSize="{Binding HeaderFontSize}"
+                   FontFamily="TrebuchetMS"
+                   FontAttributes="Bold"/>
+        </StackLayout>
+        <StackLayout VerticalOptions="FillAndExpand">
+            <Label TextColor="Black"
+                   VerticalTextAlignment="Center"
+                   HorizontalTextAlignment="Center"
+                   HorizontalOptions="FillAndExpand"
+                   VerticalOptions="FillAndExpand"
+                   FontSize="{Binding TextFontSize}"
+                   BackgroundColor="Transparent"
+                   Padding="10">
+                <Label.Text>
+                    This simple test will determine how consistently you associate colors with Letters, Numbers, Days of the Week, and Months. The following screen will give you the option to select as many of these test categories as you like. Tap CONTINUE to proceed.
+                </Label.Text>
+            </Label>
+        </StackLayout>
+        <StackLayout VerticalOptions="End">
+            <Frame CornerRadius="{OnIdiom Phone=10, Tablet=30}"
+                   Grid.Row="1"
+                   BackgroundColor="LightBlue"
+                   BorderColor="Black"
+                   VerticalOptions="Center"
+                   HorizontalOptions="Center"
+                   Margin="30">
+                   <Button x:Name="ContinueButton"
+                                Text="Continue"
+                                BackgroundColor="Transparent"
+                                BorderColor="Transparent"
+                                IsEnabled="True"
+                                Clicked="NextPageButton_Clicked"
+                                TextColor="Black"
+                                FontSize="{OnIdiom Tablet=40, Phone=20}"
+                                WidthRequest="{OnIdiom Tablet=200, Phone=150}"
+                                HeightRequest="{OnIdiom Tablet=100, Phone=50}"
+                                FontFamily="TrebuchetMS"/>
+            </Frame>
+        </StackLayout>
     </StackLayout>
 </ContentPage>

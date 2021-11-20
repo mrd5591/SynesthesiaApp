@@ -1,5 +1,4 @@
-﻿
-using ColorPicker.iOS;
+﻿using ColorPicker.iOS;
 using Foundation;
 using UIKit;
 

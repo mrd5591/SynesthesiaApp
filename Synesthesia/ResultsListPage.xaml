@@ -1,78 +1,98 @@
 ﻿<?xml version="1.0" encoding="UTF-8" ?>
-<ContentPage
-    xmlns="http://xamarin.com/schemas/2014/forms"
-    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    x:Class="Synesthesia.ResultsListPage"
-    xmlns:f9p="clr-namespace:Forms9Patch;assembly=Forms9Patch"
-    BackgroundColor="LightGoldenrodYellow">
+<ContentPage    xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="Synesthesia.ResultsListPage" xmlns:f9p="clr-namespace:Forms9Patch;assembly=Forms9Patch" BackgroundColor="LightGoldenrodYellow" xmlns:local="clr-namespace:Synesthesia">
     <StackLayout>
         <StackLayout VerticalOptions="Start">
             <Label Text="Results"
-               HorizontalOptions="Center"
-               FontSize="{OnIdiom Tablet=100, Phone=50}"
-               FontFamily="TrebuchetMS"/>
+                   HorizontalOptions="Center"
+                   FontSize="{OnIdiom Tablet=100, Phone=50}"
+                   FontFamily="TrebuchetMS"
+                   TextColor="Gray"/>
         </StackLayout>
-        <ScrollView VerticalOptions="StartAndExpand"
-                    VerticalScrollBarVisibility="Never">
-            <StackLayout BindableLayout.ItemsSource="{Binding colorMapping}"
-                         x:Name="ResultListView"
-                         BackgroundColor="Black"
-                         Margin="{OnIdiom Tablet='150,0,150,0'}">
-                <BindableLayout.ItemTemplate>
+        <CarouselView ItemsSource="{Binding Groups}" x:Name="CarouselStimView" VerticalOptions="Start" HorizontalOptions="FillAndExpand" Scrolled="CarouselStimView_Scrolled" HorizontalScrollBarVisibility="Always" IsScrollAnimated="False" Loop="False">
+                <CarouselView.ItemTemplate>
                     <DataTemplate>
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="*"/>
-                            </Grid.ColumnDefinitions>
-                            <f9p:Label Text="{Binding Key}"
-                                       TextColor="Black"
-                                       Grid.Column="0"
-                                       HorizontalOptions="Center"
-                                       VerticalOptions="Center"
-                                       Lines="1"
-                                       AutoFit="Width"
-                                       LineBreakMode="NoWrap"
-                                       FontSize="{OnIdiom Phone=30, Tablet=40}"
-                                       HorizontalTextAlignment="Center"
-                                       VerticalTextAlignment="Center"/>
-                            <BoxView Color="{Binding Value[0]}"
-                                     Grid.Column="1"/>
-                            <BoxView Color="{Binding Value[1]}"
-                                     Grid.Column="2"/>
-                            <BoxView Color="{Binding Value[2]}"
-                                     Grid.Column="3"/>
-                        </Grid>
+                        <ScrollView VerticalScrollBarVisibility="Never">
+                            <StackLayout BindableLayout.ItemsSource="{Binding Stimuli}"
+                                         BackgroundColor="Black"
+                                         Padding="0"
+                                         VerticalOptions="Start"
+                                         Margin="{Binding Marg, Source={RelativeSource AncestorType={x:Type local:ResultListViewModel}}}">
+                                <BindableLayout.ItemTemplate>
+                                    <DataTemplate>
+                                        <Grid VerticalOptions="Start" HeightRequest="{OnIdiom Tablet=50, Phone=35}">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="*"/>
+                                                <ColumnDefinition Width="*"/>
+                                                <ColumnDefinition Width="*"/>
+                                                <ColumnDefinition Width="*"/>
+                                            </Grid.ColumnDefinitions>
+                                            <f9p:Label Text="{Binding Name}"
+                                                        TextColor="Black"
+                                                        BackgroundColor="White"
+                                                        Grid.Column="0"
+                                                        HorizontalOptions="Fill"
+                                                        VerticalOptions="Fill"
+                                                        Lines="1"
+                                                        AutoFit="Width"
+                                                        LineBreakMode="NoWrap"
+                                                        FontSize="{OnIdiom Phone=30, Tablet=40}"
+                                                        HorizontalTextAlignment="Center"
+                                                        VerticalTextAlignment="Center"/>
+                                            <BoxView Color="{Binding Colors[0]}"
+                                                     Grid.Column="1">
+                                                <BoxView.Triggers>
+                                                    <DataTrigger TargetType="BoxView" Binding="{Binding Colors[0]}" Value="Transparent">
+                                                        <Setter Property="Color" Value="White"/>
+                                                    </DataTrigger>
+                                                </BoxView.Triggers>
+                                            </BoxView>
+                                            <BoxView Color="{Binding Colors[1]}"
+                                                     Grid.Column="2">
+                                                <BoxView.Triggers>
+                                                    <DataTrigger TargetType="BoxView" Binding="{Binding Colors[1]}" Value="Transparent">
+                                                        <Setter Property="Color" Value="White"/>
+                                                    </DataTrigger>
+                                                </BoxView.Triggers>
+                                            </BoxView>
+                                            <BoxView Color="{Binding Colors[2]}"
+                                                     Grid.Column="3">
+                                                <BoxView.Triggers>
+                                                    <DataTrigger TargetType="BoxView" Binding="{Binding Colors[2]}" Value="Transparent">
+                                                        <Setter Property="Color" Value="White"/>
+                                                    </DataTrigger>
+                                                </BoxView.Triggers>
+                                            </BoxView>
+                                        </Grid>
+                                    </DataTemplate>
+                                </BindableLayout.ItemTemplate>
+                            </StackLayout>
+                        </ScrollView>
                     </DataTemplate>
-                </BindableLayout.ItemTemplate>
-            </StackLayout>
-        </ScrollView>
-        <StackLayout VerticalOptions="End"
-                     MinimumHeightRequest="{OnIdiom Tablet=200, Phone=100}">
-            <Grid Padding="10"
-                  VerticalOptions="EndAndExpand">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
-                </Grid.ColumnDefinitions>
+                </CarouselView.ItemTemplate>
+            </CarouselView>
+    <StackLayout VerticalOptions="End" MinimumHeightRequest="{OnIdiom Tablet=200, Phone=100}">
+        <Grid Padding="10" VerticalOptions="End">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
                 <Label  x:Name="result"
-                        Text="Score = ..."
+                        Text="{Binding overallScore}"
                         FontSize="{OnIdiom Tablet=40, Phone=20}"
-                        HorizontalOptions="Center"
+                        HorizontalOptions="Start"
                         VerticalOptions="Center"
-                        Grid.Column="0"/>
+                        Grid.Column="0"
+                        TextColor="Gray"/>
                 <Frame CornerRadius="{OnIdiom Phone=10, Tablet=30}"
-                       Grid.Column="1"
-                       BackgroundColor="LightSalmon"
-                       BorderColor="Black"
-                       HorizontalOptions="End"
-                       VerticalOptions="End"
-                       Padding="0"
-                       Margin="0,0,15,0"
-                       HeightRequest="{OnIdiom Tablet=100, Phone=75}"
-                       WidthRequest="{OnIdiom Tablet=250, Phone=125}">
+                        Grid.Column="1"
+                        BackgroundColor="LightSalmon"
+                        BorderColor="Black"
+                        HorizontalOptions="End"
+                        VerticalOptions="End"
+                        Padding="0"
+                        Margin="0,0,15,0"
+                        HeightRequest="{OnIdiom Tablet=100, Phone=75}"
+                        WidthRequest="{OnIdiom Tablet=250, Phone=125}">
                     <f9p:Button x:Name="NextButton"
                                 Text="Next"
                                 Clicked="Button_Clicked"

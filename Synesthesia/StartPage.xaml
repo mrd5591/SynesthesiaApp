@@ -67,7 +67,7 @@
                 <Switch x:Name="Months" Grid.Column="1" Toggled="Months_Toggled" HorizontalOptions="StartAndExpand" VerticalOptions="CenterAndExpand" Scale="{OnIdiom Tablet=1.9, Phone=1}" Margin="{OnIdiom Tablet='40,0,0,0'}" ThumbColor="Orange" OnColor="CornflowerBlue"/>
             </Grid>
         </StackLayout>
-        <Grid Grid.Row="3">
+        <!--Grid Grid.Row="3">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="2*"/>
@@ -96,6 +96,6 @@
                        FontSize="{OnIdiom Tablet=50, Phone=25}"
                        FontFamily="TrebuchetMS"/>
             </StackLayout>
-        </Grid>
+        </Grid-->
     </Grid>
 </ContentPage>

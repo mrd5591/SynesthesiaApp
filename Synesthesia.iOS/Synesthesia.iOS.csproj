@@ -27,9 +27,9 @@
     <MtouchArch>x86_64</MtouchArch>
     <MtouchLink>None</MtouchLink>
     <MtouchDebug>true</MtouchDebug>
-    <CodesignKey>iPhone Distribution: Matthew Davidson (RV5KP9HGS3)</CodesignKey>
+    <CodesignKey>Apple Development: Matthew Davidson (T24ABXBR2B)</CodesignKey>
     <LangVersion>latest</LangVersion>
-    <CodesignProvision>Synesthesia TestFlight</CodesignProvision>
+    <CodesignProvision>VS: WildCard Development</CodesignProvision>
     <CodesignEntitlements>Entitlements.plist</CodesignEntitlements>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|iPhoneSimulator' ">
@@ -40,10 +40,10 @@
     <WarningLevel>4</WarningLevel>
     <MtouchLink>SdkOnly</MtouchLink>
     <MtouchArch>x86_64</MtouchArch>
-    <CodesignKey>Apple Development: mrd5591@icloud.com (T24ABXBR2B)</CodesignKey>
+    <CodesignKey>Apple Development: Matthew Davidson (T24ABXBR2B)</CodesignKey>
     <MtouchExtraArgs>--registrar:static</MtouchExtraArgs>
     <LangVersion>latest</LangVersion>
-    <CodesignProvision>iOS Team Provisioning Profile: com.exnihilocreations.Synesthesia</CodesignProvision>
+    <CodesignProvision>VS: WildCard Development</CodesignProvision>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|iPhone' ">
     <DebugSymbols>true</DebugSymbols>
@@ -54,12 +54,12 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <MtouchArch>ARM64</MtouchArch>
-    <CodesignKey>iPhone Distribution: Matthew Davidson (RV5KP9HGS3)</CodesignKey>
+    <CodesignKey>Apple Development: Matthew Davidson (T24ABXBR2B)</CodesignKey>
     <MtouchDebug>true</MtouchDebug>
     <CodesignEntitlements>Entitlements.plist</CodesignEntitlements>
     <MtouchLink>SdkOnly</MtouchLink>
     <MtouchInterpreter>-all</MtouchInterpreter>
-    <CodesignProvision>Synesthesia TestFlight</CodesignProvision>
+    <CodesignProvision>VS: WildCard Development</CodesignProvision>
     <CodesignExtraArgs>-v -v -v -v</CodesignExtraArgs>
     <LangVersion>latest</LangVersion>
   </PropertyGroup>
@@ -70,10 +70,10 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <MtouchArch>ARM64</MtouchArch>
-    <CodesignKey>iPhone Distribution: Matthew Davidson (RV5KP9HGS3)</CodesignKey>
+    <CodesignKey>Apple Development: Matthew Davidson (T24ABXBR2B)</CodesignKey>
     <CodesignEntitlements>Entitlements.plist</CodesignEntitlements>
     <MtouchLink>SdkOnly</MtouchLink>
-    <CodesignProvision>Synesthesia TestFlight</CodesignProvision>
+    <CodesignProvision>VS: WildCard Development</CodesignProvision>
 <MtouchSdkVersion>14.5</MtouchSdkVersion>
 <MtouchExtraArgs>--registrar:static -v -v -v -v</MtouchExtraArgs>
 <LangVersion>latest</LangVersion>
@@ -89,49 +89,28 @@
     <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Contents.json">
       <Visible>false</Visible>
     </ImageAsset>
-    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Icon1024.png">
-      <Visible>false</Visible>
-    </ImageAsset>
-    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Icon180.png">
-      <Visible>false</Visible>
-    </ImageAsset>
-    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Icon167.png">
-      <Visible>false</Visible>
-    </ImageAsset>
-    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Icon152.png">
-      <Visible>false</Visible>
-    </ImageAsset>
-    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Icon120.png">
-      <Visible>false</Visible>
-    </ImageAsset>
-    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Icon87.png">
-      <Visible>false</Visible>
-    </ImageAsset>
-    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Icon80.png">
-      <Visible>false</Visible>
-    </ImageAsset>
-    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Icon76.png">
-      <Visible>false</Visible>
-    </ImageAsset>
-    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Icon60.png">
-      <Visible>false</Visible>
-    </ImageAsset>
-    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Icon58.png">
-      <Visible>false</Visible>
-    </ImageAsset>
-    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Icon40.png">
-      <Visible>false</Visible>
-    </ImageAsset>
-    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Icon29.png">
-      <Visible>false</Visible>
-    </ImageAsset>
-    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Icon20.png">
-      <Visible>false</Visible>
-    </ImageAsset>
-    <BundleResource Include="Resources\xamarin_logo.png" />
-    <BundleResource Include="Resources\xamarin_logo%402x.png" />
-    <BundleResource Include="Resources\xamarin_logo%403x.png" />
     <InterfaceDefinition Include="Resources\LaunchScreen.storyboard" />
+    <BundleResource Include="Resources\synlogo.png" />
+    <BundleResource Include="Resources\synlogo%402x.png" />
+    <BundleResource Include="Resources\synlogo%403x.png" />
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\synlogo.png" />
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\synlogo%402x.png" />
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\synlogo%403x.png" />
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\synlogo20%402x.png" />
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\synlogo20%403x.png" />
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\synlogo20%402x-1.png" />
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\synlogo29%402x.png" />
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\synlogo29%403x.png" />
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\synlogo40%402x.png" />
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\synlogo40%403x.png" />
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\synlogo29.png" />
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\synlogo29%402x-1.png" />
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\synlogo40%402x-1.png" />
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\synlogo76.png" />
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\synlogo76%402x.png" />
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\synlogo20.png" />
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\synlogo40.png" />
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\synlogo167.png" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System.Xml" />
@@ -151,6 +130,10 @@
       <Project>{B0B64F94-A302-4016-8CAC-DB07B76E6D67}</Project>
       <Name>Synesthesia</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <ITunesArtwork Include="iTunesArtwork%402x" />
+    <ITunesArtwork Include="iTunesArtwork" />
   </ItemGroup>
   <ProjectExtensions>
     <MonoDevelop>

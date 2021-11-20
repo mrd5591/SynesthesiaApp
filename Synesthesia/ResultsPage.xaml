@@ -5,74 +5,138 @@
     x:Class="Synesthesia.ResultsPage"
     xmlns:f9p="clr-namespace:Forms9Patch;assembly=Forms9Patch"
     BackgroundColor="LightGoldenrodYellow">
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="2*"/>
-        </Grid.RowDefinitions>
-        <Label TextColor="Black"
-               Grid.Row="0"
-               VerticalTextAlignment="Center"
-               HorizontalTextAlignment="Center"
-               VerticalOptions="CenterAndExpand"
-               HorizontalOptions="StartAndExpand"
-               FontSize="{OnIdiom Tablet=30, Phone=15}">
-            <Label.Text>
-                Thank you for taking this test. If you would like to share your results with a researcher, write down your UID or take a screenshot. Then, enter the e-mail address of the person who should receive your results and click SEND RESULTS. This test does not store any identifying information except for this code. If you send your results to someone else, you will also need to give them this ID so that they know which results are yours.
-            </Label.Text>
-        </Label>
-        <StackLayout Grid.Row="1"
-                     BackgroundColor="PeachPuff"
-                     HorizontalOptions="CenterAndExpand"
-                     VerticalOptions="CenterAndExpand">
+    <StackLayout>
+        <f9p:Label x:Name="EndTestLabel"
+                   TextColor="Black"
+                   VerticalTextAlignment="Center"
+                   HorizontalTextAlignment="Center"
+                   HorizontalOptions="FillAndExpand"
+                   VerticalOptions="Fill"
+                   FontSize="{Binding TextFontSize}"
+                   Margin="{OnIdiom Tablet=50, Phone=15}"
+                   BackgroundColor="Transparent"
+                   Padding="10"
+                   Text="   Thank you for taking this test. If you would like to share your results with a researcher, take a screenshot. This test does not store any identifying information.">
+        </f9p:Label>
+        <!--StackLayout BackgroundColor="PeachPuff"
+                     HorizontalOptions="Center"
+                     VerticalOptions="Center"
+                     Margin="{OnIdiom Tablet=10, Phone=5}">
                 <Label Text="UID:"
-                       VerticalOptions="CenterAndExpand"
-                       HorizontalOptions="CenterAndExpand"
+                       VerticalOptions="Center"
+                       HorizontalOptions="Center"
                        HorizontalTextAlignment="Center"
                        VerticalTextAlignment="Center"
                        TextColor="Black"
-                       FontSize="{OnIdiom Tablet=50, Phone=25}"
+                       FontSize="{Binding TextFontSize}"
                        FontFamily="TrebuchetMS"
                        FontAttributes="Italic"
                        Padding="0"/>
                 <Label x:Name="UID"
                        Margin="2"
-                       VerticalOptions="CenterAndExpand"
+                       VerticalOptions="Center"
                        HorizontalOptions="CenterAndExpand"
                        HorizontalTextAlignment="Center"
                        VerticalTextAlignment="Center"
                        TextColor="Black"
-                       FontSize="{OnIdiom Tablet=50, Phone=25}"
+                       FontSize="{Binding TextFontSize}"
+                       FontFamily="TrebuchetMS"/>
+        </StackLayout-->
+        <StackLayout BackgroundColor="PeachPuff"
+                     HorizontalOptions="Center"
+                     VerticalOptions="Center"
+                     Margin="{OnIdiom Tablet=10, Phone=5}">
+                <Label Text="Overall Score:"
+                       VerticalOptions="Center"
+                       HorizontalOptions="Center"
+                       HorizontalTextAlignment="Center"
+                       VerticalTextAlignment="Center"
+                       TextColor="Black"
+                       FontSize="{Binding TextFontSize}"
+                       FontFamily="TrebuchetMS"
+                       FontAttributes="Italic"
+                       Padding="0"/>
+                <Label x:Name="Score"
+                       Margin="2"
+                       Text="{Binding overallScore}"
+                       VerticalOptions="Center"
+                       HorizontalOptions="CenterAndExpand"
+                       HorizontalTextAlignment="Center"
+                       VerticalTextAlignment="Center"
+                       TextColor="Black"
+                       FontSize="{Binding TextFontSize}"
                        FontFamily="TrebuchetMS"/>
         </StackLayout>
-        <StackLayout Grid.Row="2"
-                     HorizontalOptions="CenterAndExpand"
-                     VerticalOptions="StartAndExpand">
-            <Frame VerticalOptions="CenterAndExpand"
-                   HorizontalOptions="CenterAndExpand"
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Frame CornerRadius="{OnIdiom Phone=10, Tablet=30}"
+               Grid.Column="0"
+               BackgroundColor="LightBlue"
+               BorderColor="Black"
+               VerticalOptions="CenterAndExpand"
+               HorizontalOptions="CenterAndExpand"
+               Padding="0">
+               <Button x:Name="RestartTestButton"
+                            Text="Restart"
+                            BackgroundColor="Transparent"
+                            BorderColor="Transparent"
+                            IsEnabled="True"
+                            Clicked="RestartTestButton_Clicked"
+                            TextColor="Black"
+                            FontSize="{OnIdiom Tablet=40, Phone=20}"
+                            WidthRequest="{OnIdiom Tablet=200, Phone=150}"
+                            HeightRequest="{OnIdiom Tablet=100, Phone=75}"
+                            FontFamily="TrebuchetMS"/>
+            </Frame>
+            <Frame CornerRadius="{OnIdiom Phone=10, Tablet=30}"
+               Grid.Column="1"
+               BackgroundColor="LightBlue"
+               BorderColor="Black"
+               VerticalOptions="CenterAndExpand"
+               HorizontalOptions="CenterAndExpand"
+               Padding="0">
+               <Button x:Name="CloseButton"
+                            Text="Quit"
+                            BackgroundColor="Transparent"
+                            BorderColor="Transparent"
+                            IsEnabled="True"
+                            Clicked="CloseButton_Clicked"
+                            TextColor="Black"
+                            FontSize="{OnIdiom Tablet=40, Phone=20}"
+                            WidthRequest="{OnIdiom Tablet=200, Phone=150}"
+                            HeightRequest="{OnIdiom Tablet=100, Phone=75}"
+                            FontFamily="TrebuchetMS"/>
+            </Frame>
+        </Grid>
+        <!--StackLayout HorizontalOptions="Center"
+                     VerticalOptions="Start">
+            <Frame VerticalOptions="Center"
+                   HorizontalOptions="Center"
                    BackgroundColor="LightGoldenrodYellow"
                    Padding="5"
-                   WidthRequest="{OnIdiom Tablet=600, Phone=300}"
-                   HeightRequest="{OnIdiom Tablet=100, Phone=50}">
+                   WidthRequest="{OnIdiom Tablet=400, Phone=300}"
+                   HeightRequest="{OnIdiom Tablet=75, Phone=50}">
                 <Entry x:Name="EmailEntry"
                        Placeholder="Email..."
-                       VerticalOptions="FillAndExpand"
-                       HorizontalOptions="FillAndExpand"
+                       VerticalOptions="Fill"
+                       HorizontalOptions="Fill"
                        TextChanged="Entry_TextChanged"
                        HorizontalTextAlignment="Center"
                        BackgroundColor="PeachPuff"
                        TextColor="Black"
                        Grid.Column="1"
-                       FontSize="{OnIdiom Tablet=50,Phone=20}"
+                       FontSize="{OnIdiom Tablet=30,Phone=20}"
                        FontFamily="TrebuchetMS"
                        Keyboard="Email"/>
             </Frame>
             <Frame CornerRadius="{OnIdiom Phone=10, Tablet=30}"
                    BackgroundColor="LightSalmon"
                    BorderColor="Black"
-                   VerticalOptions="StartAndExpand"
-                   HorizontalOptions="CenterAndExpand"
+                   VerticalOptions="Start"
+                   HorizontalOptions="Center"
                    Padding="0"
                    Margin="5">
                    <f9p:Button x:Name="ResultButton"
@@ -80,8 +144,8 @@
                                 TextColor="Black"
                                 BackgroundColor="Transparent"
                                 BorderColor="Transparent"
-                                VerticalOptions="StartAndExpand"
-                                HorizontalOptions="CenterAndExpand"
+                                VerticalOptions="Start"
+                                HorizontalOptions="Center"
                                 HorizontalTextAlignment="Center"
                                 VerticalTextAlignment="Center"
                                 Padding="25,0,25,0"
@@ -95,6 +159,6 @@
                                 FontFamily="TrebuchetMS"
                                 IsEnabled="False"/>
             </Frame>
-        </StackLayout>
-    </Grid>
+        </StackLayout-->
+    </StackLayout>
 </ContentPage>

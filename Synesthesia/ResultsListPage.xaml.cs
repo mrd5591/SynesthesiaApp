@@ -1,37 +1,104 @@
 ﻿using System;
+using System.Windows;
 using System.Collections.Generic;
-
+using System.Collections.ObjectModel;
+using System.Linq;
+using Synesthesia.Models;
 using Xamarin.Forms;
+using Xamarin.Essentials;
 
 namespace Synesthesia
 {
     public partial class ResultsListPage : ContentPage
     {
-        public Dictionary<string, List<Color>> colorMapping { get; set; }
+        public List<StimulusResult> colorMapping { get; set; }
         private string Username;
-        private double score;
+        public double overallScore { get; set; }
 
-        public ResultsListPage(Dictionary<string, List<Color>> colorMapping, string Username)
+        public List<StimulusGroup> StimulusGroups { get; set; }
+        public ResultListViewModel vm { get; set; }
+
+        public ResultsListPage(List<StimulusResult> _colorMapping/*, string Username*/, bool letters, bool numbers, bool dotw, bool months)
         {
             InitializeComponent();
 
-            this.colorMapping = colorMapping;
-            this.Username = Username;
+            this.colorMapping = new List<StimulusResult>();
+            StimulusGroups = new List<StimulusGroup>();
 
-            ComputeResults();
-
-            BindingContext = this;
-
-            int i = 0;
-            foreach(var item in ResultListView.Children)
+            if (letters)
             {
-                if (i % 2 == 1)
-                    ((Grid)item).BackgroundColor = Color.White;
-                else
-                    ((Grid)item).BackgroundColor = Color.White;
+                StimulusGroup letterGroup = new StimulusGroup("Letters");
+                StimulusGroups.Add(letterGroup);
 
-                i++;
+                foreach(string stim in Questions.Letters)
+                {
+                    StimulusResult res = _colorMapping.FirstOrDefault(X => X.Name.Equals(stim));
+                    if (res != null)
+                    {
+                        colorMapping.Add(res);
+                        letterGroup.Stimuli.Add(res);
+                    }  
+                }
             }
+            if (numbers)
+            {
+                StimulusGroup numberGroup = new StimulusGroup("Numbers");
+                StimulusGroups.Add(numberGroup);
+
+                foreach (string stim in Questions.Numbers)
+                {
+                    StimulusResult res = _colorMapping.FirstOrDefault(X => X.Name.Equals(stim));
+                    if (res != null)
+                    {
+                        colorMapping.Add(res);
+                        numberGroup.Stimuli.Add(res);
+                    }
+                }
+            }
+            if (dotw)
+            {
+                StimulusGroup dotwGroup = new StimulusGroup("Days of the Week");
+                StimulusGroups.Add(dotwGroup);
+
+                foreach (string stim in Questions.DaysOfWeeks)
+                {
+                    StimulusResult res = _colorMapping.FirstOrDefault(X => X.Name.Equals(stim));
+                    if (res != null)
+                    {
+                        colorMapping.Add(res);
+                        dotwGroup.Stimuli.Add(res);
+                    }
+                }
+            }
+            if (months)
+            {
+                StimulusGroup monthGroup = new StimulusGroup("Months");
+                StimulusGroups.Add(monthGroup);
+
+                foreach (string stim in Questions.Months)
+                {
+                    StimulusResult res = _colorMapping.FirstOrDefault(X => X.Name.Equals(stim));
+                    if (res != null)
+                    {
+                        colorMapping.Add(res);
+                        monthGroup.Stimuli.Add(res);
+                    }
+                }
+            }
+
+            //this.Username = Username;
+
+            vm = new ResultListViewModel();
+            vm.Groups = StimulusGroups;
+
+            ComputeResults(StimulusGroups);
+
+            if (App.DeviceIdiom == DeviceIdiom.Tablet)
+                vm.Marg = new Thickness(App.WidthConstant / 15, 0);
+            else
+                vm.Marg = new Thickness(0);
+
+            BindingContext = vm;
         }
 
         protected override void OnAppearing()
@@ -45,40 +112,57 @@ namespace Synesthesia
         {
             NextButton.IsEnabled = false;
 
-            await Navigation.PushAsync(new ResultsPage(colorMapping, Username, score));
+            await Navigation.PushAsync(new ResultsPage(StimulusGroups, /*Username,*/ overallScore));
         }
 
-        private void ComputeResults()
+        private void ComputeResults(List<StimulusGroup> StimulusGroups)
         {
-            int N = colorMapping.Count;
+            double overallSum = 0;
+            int overallN = colorMapping.Count;
 
-            double sum = 0;
-
-            foreach (KeyValuePair<string, List<Color>> pair in colorMapping)
+            foreach(StimulusGroup group in StimulusGroups)
             {
-                List<Color> val = pair.Value;
+                int N = group.Stimuli.Count;
 
-                if (val[0].Equals(Color.Transparent) && val[1].Equals(Color.Transparent) && val[2].Equals(Color.Transparent))
+                double sum = 0;
+
+                foreach (StimulusResult res in group.Stimuli)
                 {
-                    N--;
-                    continue;
+                    List<Color> val = res.Colors;
+
+                    if (val[0].Equals(Color.Transparent) && val[1].Equals(Color.Transparent) && val[2].Equals(Color.Transparent))
+                    {
+                        N--;
+                        overallN--;
+                        continue;
+                    }
+
+                    sum += Math.Abs(val[0].R - val[1].R);
+                    sum += Math.Abs(val[0].G - val[1].G);
+                    sum += Math.Abs(val[0].B - val[1].B);
+
+                    sum += Math.Abs(val[0].R - val[2].R);
+                    sum += Math.Abs(val[0].G - val[2].G);
+                    sum += Math.Abs(val[0].B - val[2].B);
+
+                    sum += Math.Abs(val[1].R - val[2].R);
+                    sum += Math.Abs(val[1].G - val[2].G);
+                    sum += Math.Abs(val[1].B - val[2].B);
                 }
 
-                sum += Math.Abs(val[0].R - val[1].R);
-                sum += Math.Abs(val[0].G - val[1].G);
-                sum += Math.Abs(val[0].B - val[1].B);
+                overallSum += sum;
 
-                sum += Math.Abs(val[0].R - val[2].R);
-                sum += Math.Abs(val[0].G - val[2].G);
-                sum += Math.Abs(val[0].B - val[2].B);
-
-                sum += Math.Abs(val[1].R - val[2].R);
-                sum += Math.Abs(val[1].G - val[2].G);
-                sum += Math.Abs(val[1].B - val[2].B);
+                group.Score = sum / N;
             }
 
-            score = sum / N;
-            result.Text = "Score = " + Math.Round(score, 7);
+            overallScore = overallSum / overallN;
+
+            result.Text = "Score = " + Math.Round(StimulusGroups[0].Score, 2);
+        }
+
+        void CarouselStimView_Scrolled(System.Object sender, Xamarin.Forms.ItemsViewScrolledEventArgs e)
+        {
+            result.Text = "Score = " + Math.Round(StimulusGroups[e.CenterItemIndex].Score, 2);
         }
     }
 }

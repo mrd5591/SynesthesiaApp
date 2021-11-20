@@ -9,6 +9,9 @@ namespace Synesthesia
     public partial class StartPage : ContentPage
     {
         private Dictionary<string, bool> Groups = new Dictionary<string, bool>();
+        public double TextFontSize { get; set; }
+        public double HeaderFontSize { get; set; }
+
         public StartPage()
         {
             InitializeComponent();
@@ -18,7 +21,10 @@ namespace Synesthesia
             Groups.Add("DotW", false);
             Groups.Add("Months", false);
 
-            GenerateUID();
+            //GenerateUID();
+
+            TextFontSize = App.TextFontSize;
+            HeaderFontSize = App.HeaderFontSize;
 
             BindingContext = this;
         }
@@ -33,7 +39,7 @@ namespace Synesthesia
 
             if(letters || numbers || dow || months)
             {
-                await Navigation.PushAsync(new MainPage(letters, numbers, dow, months, UID.Text));
+                await Navigation.PushAsync(new MainPage(letters, numbers, dow, months/*, UID.Text*/));
             } else 
             {
                 await Application.Current.MainPage.DisplayAlert("Error", "Select at least one stimulus group", "OK");
@@ -68,12 +74,12 @@ namespace Synesthesia
             StartTestButton.IsEnabled = true;
         }
 
-        private void GenerateUID()
+        /*private void GenerateUID()
         {
             Random random = new Random();
             const string chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
             UID.Text = new string(Enumerable.Repeat(chars, 8)
               .Select(s => s[random.Next(s.Length)]).ToArray());
-        }
+        }*/
     }
 }

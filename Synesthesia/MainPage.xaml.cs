@@ -18,12 +18,17 @@ namespace Synesthesia
 
         private int questionCount = 0;
 
-        private Dictionary<string, List<Color>> colorAssociations;
+        private List<StimulusResult> colorAssociations;
         private Color DefaultColor;
 
-        private string Username;
+        //private string Username;
 
         private Random rng = new Random();
+
+        private bool letters;
+        private bool numbers;
+        private bool dotw;
+        private bool months;
 
         protected override async void OnAppearing()
         {
@@ -32,11 +37,11 @@ namespace Synesthesia
             await DisplayAlert("Instructions", "Slide the three open circles to create the color that you associate with the stimulus below. Select \"No Color\" if you do not associate a color with the displayed stimulus.", "OK");
         }
 
-        public MainPage(bool letters, bool numbers, bool dow, bool months, string username)
+        public MainPage(bool letters, bool numbers, bool dow, bool months/*, string username*/)
         {
             InitializeComponent();
 
-            Username = username;
+            //Username = username;
 
             questions = new List<string>();
             bucket1 = new List<string>();
@@ -46,21 +51,25 @@ namespace Synesthesia
             {
                 List<string> q = Questions.Letters;
                 AddQuestions(q);
+                this.letters = letters;
             }
             if (numbers)
             {
                 List<string> q = Questions.Numbers;
                 AddQuestions(q);
+                this.numbers = numbers;
             }
             if (dow)
             {
                 List<string> q = Questions.DaysOfWeeks;
                 AddQuestions(q);
+                this.dotw = dow;
             }
             if (months)
             {
                 List<string> q = Questions.Months;
                 AddQuestions(q);
+                this.months = months;
             }
 
             Shuffle(bucket1);
@@ -71,7 +80,7 @@ namespace Synesthesia
             questions.AddRange(bucket2);
             questions.AddRange(bucket3);
 
-            colorAssociations = new Dictionary<string, List<Color>>();
+            colorAssociations = new List<StimulusResult>();
 
             currentQuestionText = questions[questionCount];
 
@@ -92,13 +101,13 @@ namespace Synesthesia
 
             try
             {
-                if (!colorAssociations.Keys.Contains<string>(currentQuestionText))
+                if (colorAssociations.FirstOrDefault(X => X.Name == currentQuestionText) == null)
                 {
-                    colorAssociations.Add(currentQuestionText, new List<Color>());
-                    
+                    StimulusResult res = new StimulusResult(currentQuestionText);
+                    colorAssociations.Add(res);
                 }
 
-                colorAssociations[currentQuestionText].Add(color);
+                colorAssociations.First(X => X.Name == currentQuestionText).Colors.Add(color);
             } catch (ArgumentException ex)
             {
                 NextButton.IsEnabled = true;
@@ -109,7 +118,17 @@ namespace Synesthesia
             if(questionCount == questions.Count - 1)
             {
                 var previousPage = Navigation.NavigationStack.LastOrDefault();
-                await Navigation.PushAsync(new ResultsListPage(colorAssociations, Username));
+
+                List<StimulusGroup> groups = new List<StimulusGroup>();
+                StimulusGroup group = new StimulusGroup("test");
+                StimulusResult result = new StimulusResult("test");
+                result.Colors.Add(Color.CornflowerBlue);
+                result.Colors.Add(Color.BlueViolet);
+                result.Colors.Add(Color.DarkCyan);
+                group.Stimuli.Add(result);
+                groups.Add(group);
+
+                await Navigation.PushAsync(new ResultsListPage(colorAssociations/*, Username*/, letters, numbers, dotw, months));
                 Navigation.RemovePage(previousPage);
                 NextButton.IsEnabled = true;
             } else

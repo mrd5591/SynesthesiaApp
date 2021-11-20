@@ -16,28 +16,51 @@ namespace Synesthesia
 {
     public partial class ResultsPage : ContentPage
     {
-        private Dictionary<string, List<Color>> colorMapping;
+        private List<StimulusGroup> StimulusGroups;
         private string tempFile;
         private string Username;
-        private double score;
+        public double overallScore { get; set; }
 
-        public ResultsPage(Dictionary<string, List<Color>> colorMapping, string username, double score)
+        public double TextFontSize { get; set; }
+        public double HeaderFontSize { get; set; }
+
+        public ResultsPage(List<StimulusGroup> stimulusGroups/*, string username*/, double score)
         {
             InitializeComponent();
 
-            this.Username = username;
+            //this.Username = username;
 
-            this.colorMapping = colorMapping;
+            this.StimulusGroups = stimulusGroups;
 
-            this.score = score;
+            this.overallScore = Math.Round(score, 2);
 
-            UID.Text = username;
+            TextFontSize = App.TextFontSize;
+            HeaderFontSize = App.HeaderFontSize;
+
+            //UID.Text = username;
+            Score.Text = this.overallScore.ToString();
+
+            BindingContext = this;
         }
 
-        public async void Button_Clicked(System.Object sender, System.EventArgs e)
+        async void RestartTestButton_Clicked(System.Object sender, System.EventArgs e)
+        {
+            for (var counter = 1; counter < 3; counter++)
+            {
+                Navigation.RemovePage(Navigation.NavigationStack[Navigation.NavigationStack.Count - 2]);
+            }
+            await Navigation.PopAsync();
+        }
+
+        void CloseButton_Clicked(System.Object sender, System.EventArgs e)
+        {
+            System.Diagnostics.Process.GetCurrentProcess().Kill();
+        }
+
+        /*public async void Button_Clicked(System.Object sender, System.EventArgs e)
         {
             CreateXLSX();
-            string email = EmailEntry.Text;
+            //string email = EmailEntry.Text;
 
             await SendEmail(email);
         }
@@ -96,7 +119,7 @@ namespace Synesthesia
             }
         }
 
-        /*private void CreateCSV()
+        private void CreateCSV()
         {
             tempFile = Path.Combine(Path.GetTempPath(), "synesthesiaData.csv");
             var records = new List<CsvColor>();
@@ -113,7 +136,7 @@ namespace Synesthesia
             {
                 csv.WriteRecords(records);
             }
-        }*/
+        }
 
         private void CreateXLSX()
         {
@@ -171,49 +194,79 @@ namespace Synesthesia
             }
 
             int i = 2;
-            foreach (KeyValuePair<string, List<Color>> pair in colorMapping)
+            foreach (StimulusGroup group in StimulusGroups)
             {
-                int col = 0;
-                IRow row = sheet.CreateRow(i);
-                List<Color> colors = pair.Value;
-
-                row.CreateCell(col).SetCellValue(pair.Key);
-
-                int colIndex = 0;
-                foreach(Color c in colors)
+                foreach(StimulusResult res in group.Stimuli)
                 {
-                    ICell colorCell = row.CreateCell(++col);
-                    row.GetCell(col).SetCellValue("\t");
-                    XSSFCellStyle style = (XSSFCellStyle)workbook.CreateCellStyle();
-                    style.FillForegroundXSSFColor = new XSSFColor(c);
-                    style.FillPattern = FillPattern.SolidForeground;
-                    colorCell.CellStyle = style;
+                    int col = 0;
+                    IRow row = sheet.CreateRow(i);
+                    List<Color> colors = res.Colors;
 
-                    int t = 3 + (col-1) * 6 + ++colIndex;
-                    row.CreateCell(t).SetCellValue(c.R);
-                    row.GetCell(t).CellStyle = leftBoldBorder;
-                    row.CreateCell(3 + (col - 1) * 6 + ++colIndex).SetCellValue(c.G);
-                    row.CreateCell(3 + (col - 1) * 6 + ++colIndex).SetCellValue(c.B);
-                    row.CreateCell(3 + (col - 1) * 6 + ++colIndex).SetCellValue(c.A);
-                    row.CreateCell(3 + (col - 1) * 6 + ++colIndex).SetCellValue(c.Hue);
-                    t = 3 + (col - 1) * 6 + ++colIndex;
-                    row.CreateCell(t).SetCellValue(c.Luminosity);
-                    row.GetCell(t).CellStyle = rightBoldBorder;
+                    row.CreateCell(col).SetCellValue(res.Name);
 
-                    colIndex = 0;
+                    int colIndex = 0;
+                    foreach (Color c in colors)
+                    {
+                        ICell colorCell = row.CreateCell(++col);
+                        if (c.Equals(Color.Transparent))
+                        {
+                            row.GetCell(col).SetCellValue("None");
+                        }
+                        else
+                        {
+                            row.GetCell(col).SetCellValue("\t");
+                            XSSFCellStyle style = (XSSFCellStyle)workbook.CreateCellStyle();
+                            style.FillForegroundXSSFColor = new XSSFColor(c);
+                            style.FillPattern = FillPattern.SolidForeground;
+                            colorCell.CellStyle = style;
+                        }
+
+                        int t = 3 + (col - 1) * 6 + ++colIndex;
+                        row.CreateCell(t).SetCellValue(c.R);
+                        row.GetCell(t).CellStyle = leftBoldBorder;
+                        row.CreateCell(3 + (col - 1) * 6 + ++colIndex).SetCellValue(c.G);
+                        row.CreateCell(3 + (col - 1) * 6 + ++colIndex).SetCellValue(c.B);
+                        row.CreateCell(3 + (col - 1) * 6 + ++colIndex).SetCellValue(c.A);
+                        row.CreateCell(3 + (col - 1) * 6 + ++colIndex).SetCellValue(c.Hue);
+                        t = 3 + (col - 1) * 6 + ++colIndex;
+                        row.CreateCell(t).SetCellValue(c.Luminosity);
+                        row.GetCell(t).CellStyle = rightBoldBorder;
+
+                        colIndex = 0;
+                    }
+
+                    i++;
                 }
 
-                i++;
+                IRow scoreRow = sheet.CreateRow(++i);
+                scoreRow.CreateCell(0).SetCellValue("Group Score");
+                scoreRow.CreateCell(2).SetCellValue(group.Score);
+                sheet.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(i, i, 0, 1));
+
+                IRow textRow = sheet.CreateRow(++i);
+                ICell textCell = textRow.CreateCell(0);
+                textCell.SetCellValue("Here are the colors you chose for each trial. Lower scores (below 1.0) indicate that you are very good at making consistent associations.");
+                XSSFCellStyle style2 = (XSSFCellStyle)workbook.CreateCellStyle();
+                style2.Alignment = HorizontalAlignment.Center;
+                style2.WrapText = true;
+                style2.VerticalAlignment = VerticalAlignment.Top;
+                textCell.CellStyle = style2;
+                sheet.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(i, i + 3, 0, 3));
+
+                i += 6;
             }
 
-            IRow uidRow = sheet.CreateRow(++i);
+            IRow uidRow = sheet.CreateRow(i);
             uidRow.CreateCell(0).SetCellValue("UID");
             uidRow.CreateCell(1).SetCellValue(Username);
+            sheet.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(i, i, 1, 2));
 
-            IRow scoreRow = sheet.CreateRow(++i);
-            scoreRow.CreateCell(0).SetCellValue("Score");
-            scoreRow.CreateCell(1).SetCellValue(score);
-
+            IRow overallScoreRow = sheet.CreateRow(++i);
+            overallScoreRow.CreateCell(0).SetCellValue("Overall Score");
+            overallScoreRow.CreateCell(2).SetCellValue(overallScore);
+            sheet.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(i, i, 0, 1));
+            sheet.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(i, i, 2, 3));
+            
             FileStream sw = File.Create(tempFile);
             workbook.Write(sw);
             sw.Close();
@@ -242,6 +295,6 @@ namespace Synesthesia
             {
                 Console.WriteLine(ex);
             }
-        }
+        }*/
     }
 }
