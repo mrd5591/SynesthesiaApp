@@ -74,9 +74,9 @@
     <CodesignEntitlements>Entitlements.plist</CodesignEntitlements>
     <MtouchLink>SdkOnly</MtouchLink>
     <CodesignProvision>VS: WildCard Development</CodesignProvision>
-<MtouchSdkVersion>14.5</MtouchSdkVersion>
-<MtouchExtraArgs>--registrar:static -v -v -v -v</MtouchExtraArgs>
-<LangVersion>latest</LangVersion>
+    <MtouchSdkVersion>14.5</MtouchSdkVersion>
+    <MtouchExtraArgs>--registrar:static -v -v -v -v</MtouchExtraArgs>
+    <LangVersion>latest</LangVersion>
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Main.cs" />
@@ -93,24 +93,60 @@
     <BundleResource Include="Resources\synlogo.png" />
     <BundleResource Include="Resources\synlogo%402x.png" />
     <BundleResource Include="Resources\synlogo%403x.png" />
-    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\synlogo.png" />
-    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\synlogo%402x.png" />
-    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\synlogo%403x.png" />
-    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\synlogo20%402x.png" />
-    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\synlogo20%403x.png" />
-    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\synlogo20%402x-1.png" />
-    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\synlogo29%402x.png" />
-    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\synlogo29%403x.png" />
-    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\synlogo40%402x.png" />
-    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\synlogo40%403x.png" />
-    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\synlogo29.png" />
-    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\synlogo29%402x-1.png" />
-    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\synlogo40%402x-1.png" />
-    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\synlogo76.png" />
-    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\synlogo76%402x.png" />
-    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\synlogo20.png" />
-    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\synlogo40.png" />
-    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\synlogo167.png" />
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\synlogo.png">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\synlogo%402x.png">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\synlogo%403x.png">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\synlogo20%402x.png">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\synlogo20%403x.png">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\synlogo20%402x-1.png">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\synlogo29%402x.png">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\synlogo29%403x.png">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\synlogo40%402x.png">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\synlogo40%403x.png">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\synlogo29.png">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\synlogo29%402x-1.png">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\synlogo40%402x-1.png">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\synlogo76.png">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\synlogo76%402x.png">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\synlogo20.png">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\synlogo40.png">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\synlogo167.png">
+      <Visible>false</Visible>
+    </ImageAsset>
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System.Xml" />
